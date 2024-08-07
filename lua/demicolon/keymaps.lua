@@ -21,12 +21,14 @@ end
 function M.create_default_diagnostic_keymaps()
   vim.keymap.set(nxo, ']d', move.diagnostic_move_repeatably(true))
   vim.keymap.set(nxo, '[d', move.diagnostic_move_repeatably(false))
-  vim.keymap.set(nxo, ']h', move.diagnostic_move_repeatably(true, { severity = 'HINT' }))
-  vim.keymap.set(nxo, '[h', move.diagnostic_move_repeatably(false, { severity = 'HINT' }))
-  vim.keymap.set(nxo, ']w', move.diagnostic_move_repeatably(true, { severity = 'WARN' }))
-  vim.keymap.set(nxo, '[w', move.diagnostic_move_repeatably(false, { severity = 'WARN' }))
   vim.keymap.set(nxo, ']e', move.diagnostic_move_repeatably(true, { severity = 'ERROR' }))
   vim.keymap.set(nxo, '[e', move.diagnostic_move_repeatably(false, { severity = 'ERROR' }))
+  vim.keymap.set(nxo, ']w', move.diagnostic_move_repeatably(true, { severity = 'WARN' }))
+  vim.keymap.set(nxo, '[w', move.diagnostic_move_repeatably(false, { severity = 'WARN' }))
+  vim.keymap.set(nxo, ']i', move.diagnostic_move_repeatably(true, { severity = 'INFO' }))
+  vim.keymap.set(nxo, '[i', move.diagnostic_move_repeatably(false, { severity = 'INFO' }))
+  vim.keymap.set(nxo, ']h', move.diagnostic_move_repeatably(true, { severity = 'HINT' }))
+  vim.keymap.set(nxo, '[h', move.diagnostic_move_repeatably(false, { severity = 'HINT' }))
 end
 
 return M
