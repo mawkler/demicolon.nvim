@@ -57,8 +57,9 @@ return {
     })
 
     local function eyeliner_jump(key)
+      local forward = vim.list_contains({ 't', 'f' }, key)
       return function()
-        require('eyeliner').highlight({ forward = vim.fn.tolower(key) == 't' })
+        require('eyeliner').highlight({ forward = forward })
         return require('demicolon.jump').horizontal_jump_repeatably(key)()
       end
     end
