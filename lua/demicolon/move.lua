@@ -14,7 +14,8 @@ end
 ---@param opts vim.diagnostic.JumpOpts?
 local function diagnostic_move(forward, opts)
   opts = opts or {}
-  opts.float = vim.tbl_extend('force', opts, require('demicolon').get_options().diagnostic.float)
+  local options = require('demicolon').get_options()
+  opts.float = vim.tbl_extend('force', opts, options.diagnostic.float)
 
   local direction = forward and 'next' or 'prev'
   vim.diagnostic['goto_' .. direction](opts)
@@ -23,13 +24,15 @@ end
 ---@param forward boolean
 ---@param opts vim.diagnostic.JumpOpts?
 ---@return function
+-- TODO: change so that it takes only opts? Or not?
 function M.diagnostic_move_repeatably(forward, opts)
   return function()
     ts_repeatable_move.last_move = {
       func = function(o)
+        -- this only gets called if we're repeating ]d, etc., not if we're repating f/t, etc.
         diagnostic_move(o.forward, o)
       end,
-      opts = { forward = forward },
+      opts = { forward = forward, severity = opts and opts.severity },
       additional_args = {},
     }
 
