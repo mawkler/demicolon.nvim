@@ -39,6 +39,9 @@ opts = {
 }
 ```
 
+> [!NOTE]
+> To use treesitter text-objects you need to [configure `textobjects.select.keymaps` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-select).
+
 ### eyeliner.nvim integration
 
 [eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim) can highlight unique letters in words when you press `t`/`T`/`f`/`F`. Here's my recommended configuration for using eyeliner.nvim together with demicolon.nvim
