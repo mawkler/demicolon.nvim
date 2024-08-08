@@ -1,4 +1,4 @@
-local move = require('demicolon.move')
+local jump = require('demicolon.jump')
 local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
 
 local M = {}
@@ -12,23 +12,23 @@ function M.create_default_repeat_keymaps()
 end
 
 function M.create_default_horizontal_keymaps()
-  vim.keymap.set(nxo, 'f', move.ts_move_repeatably('f'), expr)
-  vim.keymap.set(nxo, 'F', move.ts_move_repeatably('F'), expr)
-  vim.keymap.set(nxo, 't', move.ts_move_repeatably('t'), expr)
-  vim.keymap.set(nxo, 'T', move.ts_move_repeatably('T'), expr)
+  vim.keymap.set(nxo, 'f', jump.horizontal_jump_repeatably('f'), expr)
+  vim.keymap.set(nxo, 'F', jump.horizontal_jump_repeatably('F'), expr)
+  vim.keymap.set(nxo, 't', jump.horizontal_jump_repeatably('t'), expr)
+  vim.keymap.set(nxo, 'T', jump.horizontal_jump_repeatably('T'), expr)
 end
 
 function M.create_default_diagnostic_keymaps()
-  vim.keymap.set(nxo, ']d', move.diagnostic_move_repeatably({ count = 1 }))
-  vim.keymap.set(nxo, '[d', move.diagnostic_move_repeatably({ count = -1 }))
-  vim.keymap.set(nxo, ']e', move.diagnostic_move_repeatably({ count = 1, severity = 'ERROR' }))
-  vim.keymap.set(nxo, '[e', move.diagnostic_move_repeatably({ count = -1, severity = 'ERROR' }))
-  vim.keymap.set(nxo, ']w', move.diagnostic_move_repeatably({ count = 1, severity = 'WARN' }))
-  vim.keymap.set(nxo, '[w', move.diagnostic_move_repeatably({ count = -1, severity = 'WARN' }))
-  vim.keymap.set(nxo, ']i', move.diagnostic_move_repeatably({ count = 1, severity = 'INFO' }))
-  vim.keymap.set(nxo, '[i', move.diagnostic_move_repeatably({ count = -1, severity = 'INFO' }))
-  vim.keymap.set(nxo, ']h', move.diagnostic_move_repeatably({ count = 1, severity = 'HINT' }))
-  vim.keymap.set(nxo, '[h', move.diagnostic_move_repeatably({ count = -1, severity = 'HINT' }))
+  vim.keymap.set(nxo, ']d', jump.diagnostic_jump_repeatably({ count = 1 }))
+  vim.keymap.set(nxo, '[d', jump.diagnostic_jump_repeatably({ count = -1 }))
+  vim.keymap.set(nxo, ']e', jump.diagnostic_jump_repeatably({ count = 1, severity = 'ERROR' }))
+  vim.keymap.set(nxo, '[e', jump.diagnostic_jump_repeatably({ count = -1, severity = 'ERROR' }))
+  vim.keymap.set(nxo, ']w', jump.diagnostic_jump_repeatably({ count = 1, severity = 'WARN' }))
+  vim.keymap.set(nxo, '[w', jump.diagnostic_jump_repeatably({ count = -1, severity = 'WARN' }))
+  vim.keymap.set(nxo, ']i', jump.diagnostic_jump_repeatably({ count = 1, severity = 'INFO' }))
+  vim.keymap.set(nxo, '[i', jump.diagnostic_jump_repeatably({ count = -1, severity = 'INFO' }))
+  vim.keymap.set(nxo, ']h', jump.diagnostic_jump_repeatably({ count = 1, severity = 'HINT' }))
+  vim.keymap.set(nxo, '[h', jump.diagnostic_jump_repeatably({ count = -1, severity = 'HINT' }))
 end
 
 return M

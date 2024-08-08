@@ -1,5 +1,5 @@
 local keymaps = require('demicolon.keymaps')
-local move = require('demicolon.move')
+local jump = require('demicolon.jump')
 
 local M = {}
 
@@ -8,7 +8,7 @@ local M = {}
 
 ---@class DemicolonKeymapsOptions
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
----@field diagnostic_motions? boolean Create ]d/[d, etc. key mappings to move to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps.
+---@field diagnostic_motions? boolean Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps.
 ---@field repeat_motions? boolean Create `;` and `,` key mappings
 
 ---@class DemicolonOptions
@@ -47,6 +47,6 @@ function M.setup(opts)
   end
 end
 
-M.diagnostic_move = move.diagnostic_move_repeatably
+M.diagnostic_jump = jump.diagnostic_jump_repeatably
 
 return M
