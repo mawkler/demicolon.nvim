@@ -2,8 +2,8 @@ local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move'
 
 local M = {}
 
----@param key string
----@return function
+---@param key 't' | 'T' | 'f' | 'F'
+---@return fun(): string
 function M.ts_move_repeatably(key)
   return function()
     return ts_repeatable_move['builtin_' .. key .. '_expr']()
@@ -21,15 +21,13 @@ local function diagnostic_move(forward, opts)
   vim.diagnostic['goto_' .. direction](opts)
 end
 
----@param forward boolean
+---@param forward boolean Jump forward if true, otherwise jump backwards
 ---@param opts vim.diagnostic.JumpOpts?
 ---@return function
--- TODO: change so that it takes only opts? Or not?
 function M.diagnostic_move_repeatably(forward, opts)
   return function()
     ts_repeatable_move.last_move = {
       func = function(o)
-        -- this only gets called if we're repeating ]d, etc., not if we're repating f/t, etc.
         diagnostic_move(o.forward, o)
       end,
       opts = { forward = forward, severity = opts and opts.severity },
