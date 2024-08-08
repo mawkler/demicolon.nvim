@@ -25,15 +25,18 @@ function M.diagnostic_move_repeatably(opts)
   return function()
     ts_repeatable_move.last_move = {
       func = function(o)
-        -- TODO: try and use v:count
-        o.count = o.forward and 1 or -1
+        local count = o.forward and 1 or -1
+        o.count = count * vim.v.count1
         diagnostic_move(o)
       end,
       opts = opts,
       additional_args = {},
     }
 
-    diagnostic_move(opts)
+    local count = opts.count * vim.v.count1
+    local opts_with_count = vim.tbl_deep_extend('force', opts, { count = count })
+
+    diagnostic_move(opts_with_count)
   end
 end
 
