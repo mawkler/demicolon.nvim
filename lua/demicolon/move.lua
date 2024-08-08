@@ -10,31 +10,30 @@ function M.ts_move_repeatably(key)
   end
 end
 
----@param forward boolean
 ---@param opts vim.diagnostic.JumpOpts?
-local function diagnostic_move(forward, opts)
+local function diagnostic_move(opts)
   opts = opts or {}
   local options = require('demicolon').get_options()
   opts.float = vim.tbl_extend('force', opts, options.diagnostic.float)
 
-  local direction = forward and 'next' or 'prev'
-  vim.diagnostic['goto_' .. direction](opts)
+  vim.diagnostic.jump(opts)
 end
 
----@param forward boolean Jump forward if true, otherwise jump backwards
----@param opts vim.diagnostic.JumpOpts?
+---@param opts vim.diagnostic.JumpOpts
 ---@return function
-function M.diagnostic_move_repeatably(forward, opts)
+function M.diagnostic_move_repeatably(opts)
   return function()
     ts_repeatable_move.last_move = {
       func = function(o)
-        diagnostic_move(o.forward, o)
+        -- TODO: try and use v:count
+        o.count = o.forward and 1 or -1
+        diagnostic_move(o)
       end,
-      opts = { forward = forward, severity = opts and opts.severity },
+      opts = opts,
       additional_args = {},
     }
 
-    diagnostic_move(forward, opts)
+    diagnostic_move(opts)
   end
 end
 
