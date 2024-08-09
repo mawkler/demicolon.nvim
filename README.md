@@ -2,7 +2,7 @@
 
 In addition to repeating `t`/`T`/`f`/`F` motions, this plugin lets you repeat diagnostic jumps (e.g. `]d`/`[d`) and [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) jumps (e.g. `]f`/`[f`) with the `;`/`,` keys.
 
-https://github.com/user-attachments/assets/27d49b00-a1bb-48ab-8028-c815432db996
+https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
 ## Installation
 
