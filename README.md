@@ -1,6 +1,6 @@
-# Demicolon
+# demicolon.nvim
 
-In addition to repeating `t`/`T`/`f`/`F` motions, this plugin lets you repeat diagnostic jumps (e.g. `]d`/`[d`) and [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) jumps (e.g. `]f`/`[f`) with the `;`/`,` keys.
+In addition to repeating `t`/`T`/`f`/`F` motions, this plugin lets you repeat diagnostic jumps (e.g. `]d`/`[d`) and [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) jumps (e.g. `]f`/`[f`) with the `;`/`,` keys.
 
 https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
@@ -18,6 +18,38 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
   opts = {}
 }
 ```
+
+## Usage
+
+After pressing any of the keymaps below, demicolon.nvim lets you repeat them with `;` and `,`.
+
+### Vertical motions (`t`/`T`/`f`/`F`)
+
+See [`:help t`](https://neovim.io/doc/user/motion.html#t), [`:help T`](https://neovim.io/doc/user/motion.html#T), [`:help f`](https://neovim.io/doc/user/motion.html#f), and [`:help F`](https://neovim.io/doc/user/motion.html#F) respectively.
+
+### Diagnostic motions
+
+By default, demicolon.nvim will create the diagnostic motion keymaps below. See [Configuration](#Configuration) for info on how to disable default keymaps.
+
+| Motion | Description                        |
+| ------ | ---------------------------------- |
+| `]d`   | Next diagnostic (any severity)     |
+| `[d`   | Previous diagnostic (any severity) |
+| `]e`   | Next error                         |
+| `[e`   | Previous error                     |
+| `]w`   | Next warning                       |
+| `[w`   | Previous warning                   |
+| `]i`   | Next information                   |
+| `[i`   | Previous information               |
+| `]h`   | Next hint                          |
+| `[h`   | Previous hint                      |
+
+### Treesitter text-object motions
+
+demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) motion. For example: `]f` to "jump to next function", `]c` to "jump to next class", etc.
+
+> [!NOTE]
+> To use treesitter text-objects you need to [configure `textobjects.select.keymaps` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
 
 ## Configuration
 
@@ -40,9 +72,6 @@ opts = {
   },
 }
 ```
-
-> [!NOTE]
-> To use treesitter text-objects you need to [configure `textobjects.select.keymaps` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-select).
 
 ### eyeliner.nvim integration
 
