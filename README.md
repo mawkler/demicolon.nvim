@@ -49,7 +49,7 @@ By default, demicolon.nvim will create the diagnostic motion keymaps below. See 
 demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) motion. For example: `]f` to "jump to next function", `]c` to "jump to next class", etc.
 
 > [!NOTE]
-> To use treesitter text-objects you need to [configure `textobjects.select.keymaps` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
+> To use treesitter text-objects you need to [configure `textobjects.move` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
 
 ## Configuration
 
