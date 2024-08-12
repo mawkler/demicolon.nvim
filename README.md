@@ -11,6 +11,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 {
   'mawkler/demicolon.nvim',
+  -- keys = { 't', 'f', 'T', 'F', ']', '[' }, -- Uncomment this to lazy load
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -80,6 +81,7 @@ opts = {
 ```lua
 return {
   'jinh0/eyeliner.nvim',
+  -- keys = { 't', 'f', 'T', 'F' }, -- Uncomment this to lazy load eyeliner.nvim
   config = function()
     require('eyeliner').setup({
       highlight_on_key = true,
