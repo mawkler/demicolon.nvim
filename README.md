@@ -11,7 +11,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 {
   'mawkler/demicolon.nvim',
-  -- keys = { 't', 'f', 'T', 'F', ']', '[' }, -- Uncomment this to lazy load
+  -- keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[' }, -- Uncomment this to lazy load
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-treesitter/nvim-treesitter-textobjects',
