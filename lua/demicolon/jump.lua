@@ -19,24 +19,31 @@ local function diagnostic_jump(opts)
   vim.diagnostic.jump(opts)
 end
 
+---@param callback function
+---@param opts vim.diagnostic.JumpOpts
+function M.repeatably_do(callback, opts)
+  opts = opts or {}
+  ts_repeatable_move.last_move = {
+    func = function(o)
+      local count = o.forward and 1 or -1
+      o.count = count * vim.v.count1
+      callback(o)
+    end,
+    opts = opts,
+    additional_args = {},
+  }
+
+  callback(opts)
+end
+
 ---@param opts vim.diagnostic.JumpOpts
 ---@return function
 function M.diagnostic_jump_repeatably(opts)
   return function()
-    ts_repeatable_move.last_move = {
-      func = function(o)
-        local count = o.forward and 1 or -1
-        o.count = count * vim.v.count1
-        diagnostic_jump(o)
-      end,
-      opts = opts,
-      additional_args = {},
-    }
-
     local count = opts.count * vim.v.count1
     local opts_with_count = vim.tbl_deep_extend('force', opts, { count = count })
 
-    diagnostic_jump(opts_with_count)
+    M.repeatably_do(diagnostic_jump, opts_with_count)
   end
 end
 
