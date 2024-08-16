@@ -11,9 +11,21 @@ local M = {}
 ---@field diagnostic_motions? boolean Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps.
 ---@field repeat_motions? boolean Create `;` and `,` key mappings
 
+---@class DemicolonGitsignsKeymapOptions
+---@field next? string
+---@field prev? string
+
+---@class DemicolonGitsignsOptions
+---@field enabled? boolean
+---@field keymaps? DemicolonGitsignsKeymapOptions
+
+---@class DemicolonIntegrationOptions
+---@field gitsigns? DemicolonGitsignsOptions Integration with https://github.com/lewis6991/gitsigns.nvim
+
 ---@class DemicolonOptions
 ---@field diagnostic? DemicolonDiagnosticOptions Diagnostic options
 ---@field keymaps? DemicolonKeymapsOptions Create default keymaps
+---@field integrations? DemicolonIntegrationOptions Integrations with other plugins
 local options = {
   diagnostic = {
     float = {}
@@ -23,6 +35,15 @@ local options = {
     diagnostic_motions = true,
     repeat_motions = true,
   },
+  integrations = {
+    gitsigns = {
+      enabled = true,
+      keymaps = {
+        next = ']c',
+        prev = '[c',
+      },
+    },
+  },
 }
 
 ---@return DemicolonOptions
@@ -30,7 +51,7 @@ function M.get_options()
   return options
 end
 
----@param opts DemicolonOptions
+---@param opts? DemicolonOptions
 function M.setup(opts)
   options = vim.tbl_deep_extend('force', options, opts or {})
 
@@ -44,6 +65,10 @@ function M.setup(opts)
 
   if options.keymaps.diagnostic_motions then
     keymaps.create_default_diagnostic_keymaps()
+  end
+
+  if options.integrations.gitsigns.enabled then
+    require('demicolon.integrations.gitsigns').create_keymaps()
   end
 end
 

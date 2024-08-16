@@ -2,6 +2,8 @@
 
 In addition to repeating `t`/`T`/`f`/`F` motions, this plugin lets you repeat diagnostic jumps (e.g. `]d`/`[d`) and [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) jumps (e.g. `]f`/`[f`) with the `;`/`,` keys.
 
+This plugin also integrates with [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim).
+
 https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
 ## Installation
@@ -70,6 +72,16 @@ opts = {
     diagnostic_motions = true,
     -- Create `;` and `,` key mappings
     repeat_motions = true,
+  },
+  integrations = {
+    -- Integration with https://github.com/lewis6991/gitsigns.nvim
+    gitsigns = {
+      enabled = true,
+      keymaps = {
+        next = ']c',
+        prev = '[c',
+      },
+    },
   },
 }
 ```
