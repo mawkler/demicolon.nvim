@@ -86,6 +86,10 @@ opts = {
 }
 ```
 
+### Custom jumps
+
+You can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [gitsigns.nvim integration](./lua/demicolon/integrations/gitsigns.lua) for inspiration.
+
 ### eyeliner.nvim integration
 
 [eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim) can highlight unique letters in words when you press `t`/`T`/`f`/`F`. Here's my recommended configuration for using eyeliner.nvim together with demicolon.nvim

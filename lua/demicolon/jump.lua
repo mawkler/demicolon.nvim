@@ -19,8 +19,11 @@ local function diagnostic_jump(opts)
   vim.diagnostic.jump(opts)
 end
 
----@param callback function
----@param opts vim.diagnostic.JumpOpts
+---@class DemicolonRepeatablyDoOptions
+---@field forward boolean Jump forward if true, otherwise jump backward
+
+---@param callback fun(DemicolonRepeatablyDoOptions) Repeatable function to be called. It should determine by the `forward` boolean whether to move forward or backward
+---@param opts DemicolonRepeatablyDoOptions Options to pass to the function. Make sure to include the `forward` boolean
 function M.repeatably_do(callback, opts)
   opts = opts or {}
   ts_repeatable_move.last_move = {
