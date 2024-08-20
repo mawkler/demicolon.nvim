@@ -19,16 +19,16 @@ function M.create_default_horizontal_keymaps()
 end
 
 function M.create_default_diagnostic_keymaps()
-  vim.keymap.set(nxo, ']d', jump.diagnostic_jump_repeatably({ count = 1 }))
-  vim.keymap.set(nxo, '[d', jump.diagnostic_jump_repeatably({ count = -1 }))
-  vim.keymap.set(nxo, ']e', jump.diagnostic_jump_repeatably({ count = 1, severity = 'ERROR' }))
-  vim.keymap.set(nxo, '[e', jump.diagnostic_jump_repeatably({ count = -1, severity = 'ERROR' }))
-  vim.keymap.set(nxo, ']w', jump.diagnostic_jump_repeatably({ count = 1, severity = 'WARN' }))
-  vim.keymap.set(nxo, '[w', jump.diagnostic_jump_repeatably({ count = -1, severity = 'WARN' }))
-  vim.keymap.set(nxo, ']i', jump.diagnostic_jump_repeatably({ count = 1, severity = 'INFO' }))
-  vim.keymap.set(nxo, '[i', jump.diagnostic_jump_repeatably({ count = -1, severity = 'INFO' }))
-  vim.keymap.set(nxo, ']h', jump.diagnostic_jump_repeatably({ count = 1, severity = 'HINT' }))
-  vim.keymap.set(nxo, '[h', jump.diagnostic_jump_repeatably({ count = -1, severity = 'HINT' }))
+  vim.keymap.set(nxo, ']d', jump.diagnostic_jump_repeatably({ forward = true }))
+  vim.keymap.set(nxo, '[d', jump.diagnostic_jump_repeatably({ forward = false }))
+  vim.keymap.set(nxo, ']e', jump.diagnostic_jump_repeatably({ forward = true, severity = 'ERROR' }))
+  vim.keymap.set(nxo, '[e', jump.diagnostic_jump_repeatably({ forward = false, severity = 'ERROR' }))
+  vim.keymap.set(nxo, ']w', jump.diagnostic_jump_repeatably({ forward = true, severity = 'WARN' }))
+  vim.keymap.set(nxo, '[w', jump.diagnostic_jump_repeatably({ forward = false, severity = 'WARN' }))
+  vim.keymap.set(nxo, ']i', jump.diagnostic_jump_repeatably({ forward = true, severity = 'INFO' }))
+  vim.keymap.set(nxo, '[i', jump.diagnostic_jump_repeatably({ forward = false, severity = 'INFO' }))
+  vim.keymap.set(nxo, ']h', jump.diagnostic_jump_repeatably({ forward = true, severity = 'HINT' }))
+  vim.keymap.set(nxo, '[h', jump.diagnostic_jump_repeatably({ forward = false, severity = 'HINT' }))
 end
 
 return M
