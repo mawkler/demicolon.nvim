@@ -72,6 +72,4 @@ function M.setup(opts)
   end
 end
 
-M.diagnostic_jump = jump.diagnostic_jump_repeatably
-
 return M

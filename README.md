@@ -111,7 +111,7 @@ return {
       local forward = vim.list_contains({ 't', 'f' }, key)
       return function()
         require('eyeliner').highlight({ forward = forward })
-        return require('demicolon.jump').horizontal_jump_repeatably(key)()
+        return require('demicolon.jump').horizontal_jump(key)()
       end
     end
 
@@ -190,7 +190,7 @@ require('lazy').setup({
         local forward = vim.list_contains({ 't', 'f' }, key)
         return function()
           require('eyeliner').highlight({ forward = forward })
-          return require('demicolon.jump').horizontal_jump_repeatably(key)()
+          return require('demicolon.jump').horizontal_jump(key)()
         end
       end
 
