@@ -92,7 +92,9 @@ You can create your own custom repeatable jumps using `repeatably_do()` in [`dem
 
 ### eyeliner.nvim integration
 
-[eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim) can highlight unique letters in words when you press `t`/`T`/`f`/`F`. Here's my recommended configuration for using eyeliner.nvim together with demicolon.nvim
+[eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim) can highlight unique letters in words when you press `t`/`T`/`f`/`F`. Below is my recommended configuration for using eyeliner.nvim together with demicolon.nvim.
+
+**NOTE:** make sure to set `keymaps.horizontal_motions = false` in your demicolon setup if you want to use this config.
 
 ```lua
 return {
@@ -123,6 +125,90 @@ return {
   end
 }
 ```
+
+### Full recommended config
+
+Here is a full configuration, including [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) and [eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim):
+
+<details>
+<summary><b>Click here to show</b></summary>
+
+```lua
+require('lazy').setup({
+  {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        ensure_installed = 'all',
+        textobjects = {
+          move = {
+            enable = true,
+            goto_next_start = {
+              ["]f"] = "@function.outer",
+              ["]a"] = "@argument.outer",
+              ["]m"] = "@method.outer",
+              -- ...
+            },
+            goto_previous_start = {
+              ["[f"] = "@function.outer",
+              ["[a"] = "@argument.outer",
+              ["[m"] = "@method.outer",
+              -- ...
+            },
+          },
+        },
+      })
+    end,
+  },
+  {
+    'jinh0/eyeliner.nvim',
+    keys = { 't', 'f', 'T', 'F' },
+    opts = {
+      highlight_on_key = true,
+      dim = true,
+      default_keymaps = false,
+    }
+  },
+  {
+    'mawkler/demicolon.nvim',
+    dependencies = {
+      'jinh0/eyeliner.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-treesitter/nvim-treesitter-textobjects'
+    },
+    keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[', ']d', '[d' },
+    config = function()
+      require('demicolon').setup({
+        keymaps = {
+          horizontal_motions = false,
+        },
+      })
+
+      local function eyeliner_jump(key)
+        local forward = vim.list_contains({ 't', 'f' }, key)
+        return function()
+          require('eyeliner').highlight({ forward = forward })
+          return require('demicolon.jump').horizontal_jump_repeatably(key)()
+        end
+      end
+
+      local nxo = { 'n', 'x', 'o' }
+      local opts = { expr = true }
+
+      vim.keymap.set(nxo, 'f', eyeliner_jump('f'), opts)
+      vim.keymap.set(nxo, 'F', eyeliner_jump('F'), opts)
+      vim.keymap.set(nxo, 't', eyeliner_jump('t'), opts)
+      vim.keymap.set(nxo, 'T', eyeliner_jump('T'), opts)
+    end
+  }
+})
+```
+
+</details>
+
+[Here's](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#built-in-textobjects) the full list of available treesitter textobjects.
 
 ## Credit
 
