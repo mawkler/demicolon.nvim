@@ -2,17 +2,19 @@ local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move'
 
 local M = {}
 
----@param func fun(opts: table | { forward: boolean }) Repeatable function to be called. It should determine by the `forward` boolean whether to move forward or backward
+---@param func fun(opts: (table | { forward: boolean }), additional_args?: ...) Repeatable function to be called. It should determine by the `forward` boolean whether to move forward or backward
 ---@param opts table | { forward: boolean } Options to pass to the function. Make sure to include the `forward` boolean
-function M.repeatably_do(func, opts)
+---@param additional_args? any[]
+function M.repeatably_do(func, opts, additional_args)
   opts = opts or {}
+  additional_args = additional_args or {}
   ts_repeatable_move.last_move = {
     func = func,
     opts = opts,
-    additional_args = {},
+    additional_args = additional_args,
   }
 
-  func(opts)
+  func(opts, unpack(additional_args))
 end
 
 ---@param key 't' | 'T' | 'f' | 'F'
