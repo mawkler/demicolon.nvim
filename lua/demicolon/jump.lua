@@ -50,7 +50,15 @@ function M.diagnostic_jump(opts)
         vim.diagnostic.jump(o)
       else
         -- Deprecated in favor of `vim.diagnostic.jump` in Neovim 0.11.0
-        vim.diagnostic.goto_next(o)
+        if o.count > 0 then
+          vim.diagnostic.goto_next({
+            float = o.float,
+          })
+        else
+          vim.diagnostic.goto_prev({
+            float = o.float,
+          })
+        end
       end
     end, opts)
   end
