@@ -46,7 +46,12 @@ function M.diagnostic_jump(opts)
       local count = o.forward and 1 or -1
       o.count = count * vim.v.count1
 
-      vim.diagnostic.jump(o)
+      if vim.diagnostic.jump then
+        vim.diagnostic.jump(o)
+      else
+        -- Deprecated in favor of `vim.diagnostic.jump` in Neovim 0.11.0
+        vim.diagnostic.goto_next(o)
+      end
     end, opts)
   end
 end
