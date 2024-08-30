@@ -214,7 +214,7 @@ require('lazy').setup({
 
 Neovim's default behaviour is for `;`/`,` to remember the direction of the jump that they repeat. That means that if you for instance repeat a `T` motion (as opposed to `t`) with `;` it will move you to the _left_. A lot of people prefer if `;` always moves you to the right and `,` always to the left, which is how demicolon works by default.
 
-If you prefer Neovim's default behaviour you can disable demicolon's default `;`/`,` keymaps and remap manually like this:
+If you prefer Neovim's default behaviour you can disable demicolon's default `;`/`,` keymaps and remap them manually like this:
 
 <details>
 <summary><b>Click here to see the code</b></summary>
