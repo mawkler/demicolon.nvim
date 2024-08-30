@@ -131,7 +131,7 @@ return {
 Here is a full configuration, including [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) and [eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim):
 
 <details>
-<summary><b>Click here to show</b></summary>
+<summary><b>Click here to see the code</b></summary>
 
 ```lua
 require('lazy').setup({
@@ -209,6 +209,31 @@ require('lazy').setup({
 </details>
 
 [Here's](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#built-in-textobjects) the full list of available treesitter textobjects.
+
+### "I want `;`/`,` to remember the direction of the original jump"
+
+Neovim's default behaviour is for `;`/`,` to remember the direction of the jump that they repeat. That means that if you for instance repeat a `T` motion (as opposed to `t`) with `;` it will move you to the _left_. A lot of people prefer if `;` always moves you to the right and `,` always to the left, which is how demicolon works by default.
+
+If you prefer Neovim's default behaviour you can disable demicolon's default `;`/`,` keymaps and remap manually like this:
+
+<details>
+<summary><b>Click here to see the code</b></summary>
+
+```lua
+require('demicolon').setup({
+  keymaps = {
+    repeat_motions = false,
+  },
+})
+
+local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+local nxo = { 'n', 'x', 'o' }
+
+vim.keymap.set(nxo, ';', ts_repeatable_move.repeat_last_move)
+vim.keymap.set(nxo, ',', ts_repeatable_move.repeat_last_move_opposite)
+```
+
+</details>
 
 ## Credit
 
