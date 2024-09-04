@@ -24,9 +24,9 @@ function M.create_keymaps()
   local nxo = { 'n', 'x', 'o' }
 
   ---@diagnostic disable-next-line: need-check-nil
-  vim.keymap.set(nxo, options.keymaps.next, M.jump({ forward = true }))
+  vim.keymap.set(nxo, options.keymaps.next, M.jump({ forward = true }), {desc = "Next hunk"})
   ---@diagnostic disable-next-line: need-check-nil
-  vim.keymap.set(nxo, options.keymaps.prev, M.jump({ forward = false }))
+  vim.keymap.set(nxo, options.keymaps.prev, M.jump({ forward = false }), {desc= "Previous hunk"})
 end
 
 return M
