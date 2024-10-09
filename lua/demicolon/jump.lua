@@ -27,7 +27,8 @@ end
 
 ---@deprecated Use horizontal_jump instead
 function M.horizontal_jump_repeatably(opts)
-  vim.notify('diagnostic.nvim: `horizontal_jump_repeatably` is deprecated. Use `horizontal_jump` instead.')
+  vim.notify(
+    'diagnostic.nvim: `horizontal_jump_repeatably` is deprecated. Use `horizontal_jump` instead.')
   return M.horizontal_jump(opts)
 end
 
@@ -62,8 +63,43 @@ end
 
 ---@deprecated Use `diagnostic_jump` instead
 function M.diagnostic_jump_repeatably(opts)
-  vim.notify('diagnostic.nvim: `diagnostic_jump_repeatably` is deprecated. Use `diagnostic_jump` instead.')
+  vim.notify(
+    'diagnostic.nvim: `diagnostic_jump_repeatably` is deprecated. Use `diagnostic_jump` instead.')
   return M.diagnostic_jump(opts)
+end
+
+---@param type 'quickfix' | 'location'
+---@param opts { forward: boolean }
+local function list_jump(type, list, opts)
+  require('demicolon.jump').repeatably_do(function(o)
+    if vim.tbl_isempty(list) then
+      return
+    end
+
+    local direction = o.forward and 'next' or 'prev'
+    local prefix = type == 'quickfix' and 'c' or 'l'
+
+    ---@diagnostic disable-next-line: param-type-mismatch
+    pcall(vim.cmd, vim.v.count1 .. prefix .. direction)
+  end, { forward = opts.forward }, opts)
+end
+
+---@param opts { forward: boolean }
+---@return function
+function M.quickfix_list_jump(opts)
+  return function()
+    local list = vim.fn.getqflist()
+    return list_jump('quickfix', list, opts)
+  end
+end
+
+---@param opts { forward: boolean }
+---@return function
+function M.location_list_jump(opts)
+  return function()
+    local list = vim.fn.getloclist(0)
+    return list_jump('location', list, opts)
+  end
 end
 
 return M

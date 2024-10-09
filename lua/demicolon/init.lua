@@ -10,6 +10,7 @@ local M = {}
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
 ---@field diagnostic_motions? boolean Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps.
 ---@field repeat_motions? boolean Create `;` and `,` key mappings
+---@field list_motions? boolean Create `]q`/`[q` and `]l`/`[l` quickfix and location list mappings
 
 ---@class DemicolonGitsignsKeymapOptions
 ---@field next? string
@@ -28,12 +29,13 @@ local M = {}
 ---@field integrations? DemicolonIntegrationOptions Integrations with other plugins
 local options = {
   diagnostic = {
-    float = {}
+    float = {},
   },
   keymaps = {
     horizontal_motions = true,
     diagnostic_motions = true,
     repeat_motions = true,
+    list_motions = true,
   },
   integrations = {
     gitsigns = {
@@ -65,6 +67,10 @@ function M.setup(opts)
 
   if options.keymaps.diagnostic_motions then
     keymaps.create_default_diagnostic_keymaps()
+  end
+
+  if options.keymaps.list_motions then
+    keymaps.create_default_list_keymaps()
   end
 
   if options.integrations.gitsigns.enabled then

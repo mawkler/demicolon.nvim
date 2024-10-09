@@ -54,6 +54,10 @@ demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.
 > [!NOTE]
 > To use treesitter text-objects you need to [configure `textobjects.move` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
 
+### Quickfix and location list motions
+
+See [`:help ]q`](https://neovim.io/doc/user/motion.html#]q) /[`:help [q`](https://neovim.io/doc/user/motion.html#[q) and [`:help ]l`](https://neovim.io/doc/user/motion.html#]l) /[`:help [l`](https://neovim.io/doc/user/motion.html#[l) respectively.
+
 ## Configuration
 
 Default options:
@@ -72,6 +76,8 @@ opts = {
     diagnostic_motions = true,
     -- Create `;` and `,` key mappings
     repeat_motions = true,
+    -- Create `]q`/`[q` and `]l`/`[l` quickfix and location list mappings
+    list_motions = true,
   },
   integrations = {
     -- Integration with https://github.com/lewis6991/gitsigns.nvim
