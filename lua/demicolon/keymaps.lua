@@ -40,11 +40,11 @@ function M.create_default_diagnostic_keymaps()
 end
 
 function M.create_default_list_keymaps()
-  map('n', ']q', jump.quickfix_list_jump({ forward = true }))
-  map('n', '[q', jump.quickfix_list_jump({ forward = false }))
+  map('n', ']q', jump.quickfix_list_jump({ forward = true, desc = 'Next quickfix list item' }))
+  map('n', '[q', jump.quickfix_list_jump({ forward = false, desc = 'Previous quickfix list item' }))
 
-  map('n', ']l', jump.location_list_jump({ forward = true }))
-  map('n', '[l', jump.location_list_jump({ forward = false }))
+  map('n', ']l', jump.location_list_jump({ forward = true, desc = 'Next location list item' }))
+  map('n', '[l', jump.location_list_jump({ forward = false, desc = 'Previous location list item' }))
 end
 
 return M
