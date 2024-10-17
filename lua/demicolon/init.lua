@@ -11,6 +11,8 @@ local M = {}
 ---@field diagnostic_motions? boolean Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps.
 ---@field repeat_motions? boolean Create `;` and `,` key mappings
 ---@field list_motions? boolean Create `]q`/`[q` and `]l`/`[l` quickfix and location list mappings
+---@field spell_motions? boolean Create `]s`/`[s` key mappings for jumping to spelling mistakes
+---@field fold_motions? boolean Create `]z`/`[z` key mappings for jumping to folds
 
 ---@class DemicolonGitsignsKeymapOptions
 ---@field next? string
@@ -36,6 +38,8 @@ local options = {
     diagnostic_motions = true,
     repeat_motions = true,
     list_motions = true,
+    spell_motions = true,
+    fold_motions = true,
   },
   integrations = {
     gitsigns = {
@@ -71,6 +75,14 @@ function M.setup(opts)
 
   if options.keymaps.list_motions then
     keymaps.create_default_list_keymaps()
+  end
+
+  if options.keymaps.spell_motions then
+    keymaps.create_default_spell_keymaps()
+  end
+
+  if options.keymaps.fold_motions then
+    keymaps.create_default_fold_keymaps()
   end
 
   if options.integrations.gitsigns.enabled then

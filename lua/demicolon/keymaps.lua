@@ -40,11 +40,21 @@ function M.create_default_diagnostic_keymaps()
 end
 
 function M.create_default_list_keymaps()
-  map('n', ']q', jump.quickfix_list_jump({ forward = true, desc = 'Next quickfix list item' }))
-  map('n', '[q', jump.quickfix_list_jump({ forward = false, desc = 'Previous quickfix list item' }))
+  map(nxo, ']q', jump.quickfix_list_jump({ forward = true, desc = 'Next quickfix list item' }))
+  map(nxo, '[q', jump.quickfix_list_jump({ forward = false, desc = 'Previous quickfix list item' }))
 
-  map('n', ']l', jump.location_list_jump({ forward = true, desc = 'Next location list item' }))
-  map('n', '[l', jump.location_list_jump({ forward = false, desc = 'Previous location list item' }))
+  map(nxo, ']l', jump.location_list_jump({ forward = true, desc = 'Next location list item' }))
+  map(nxo, '[l', jump.location_list_jump({ forward = false, desc = 'Previous location list item' }))
+end
+
+function M.create_default_spell_keymaps()
+  map(nxo, ']s', jump.spell_jump({ forward = true }), { desc = 'Next spellning mistake' })
+  map(nxo, '[s', jump.spell_jump({ forward = false }), { desc = 'Previous spellning mistake' })
+end
+
+function M.create_default_fold_keymaps()
+  map(nxo, ']z', jump.fold_jump({ forward = true }), { desc = 'Next fold' })
+  map(nxo, '[z', jump.fold_jump({ forward = false }), { desc = 'Previous fold' })
 end
 
 return M

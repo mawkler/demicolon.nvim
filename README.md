@@ -34,18 +34,13 @@ See [`:help t`](https://neovim.io/doc/user/motion.html#t), [`:help T`](https://n
 
 By default, demicolon.nvim will create the diagnostic motion keymaps below. See [Configuration](#Configuration) for info on how to disable default keymaps.
 
-| Motion | Description                        |
-| ------ | ---------------------------------- |
-| `]d`   | Next diagnostic (any severity)     |
-| `[d`   | Previous diagnostic (any severity) |
-| `]e`   | Next error                         |
-| `[e`   | Previous error                     |
-| `]w`   | Next warning                       |
-| `[w`   | Previous warning                   |
-| `]i`   | Next information                   |
-| `[i`   | Previous information               |
-| `]h`   | Next hint                          |
-| `[h`   | Previous hint                      |
+| Motion    | Description                             |
+| --------- | --------------------------------------- |
+| `]d`/`[d` | Next/previous diagnostic (any severity) |
+| `]e`/`[e` | Next/previous error                     |
+| `]w`/`[w` | Next/previous warning                   |
+| `]i`/`[i` | Next/previous information               |
+| `]h`/`[h` | Next/previous hint                      |
 
 ### Treesitter text-object motions
 
@@ -54,9 +49,14 @@ demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.
 > [!NOTE]
 > To use treesitter text-objects you need to [configure `textobjects.move` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
 
-### Quickfix and location list motions
+### Native Neovim motions
 
-See [`:help ]q`](https://neovim.io/doc/user/motion.html#]q) /[`:help [q`](https://neovim.io/doc/user/motion.html#[q) and [`:help ]l`](https://neovim.io/doc/user/motion.html#]l) /[`:help [l`](https://neovim.io/doc/user/motion.html#[l) respectively.
+| Motion    | Jumps to next/pevious... | Help page with more information                                                                                   |
+| --------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `]q`/`[q` | item in quickfix list    | [`:help ]q`](https://neovim.io/doc/user/motion.html#]q)/[`:help [q`](https://neovim.io/doc/user/motion.html#[q)   |
+| `]l`/`[l` | item in location list    | [`:help ]l`](https://neovim.io/doc/user/motion.html#]l)/[`:help [l`](https://neovim.io/doc/user/motion.html#[l)   |
+| `]z`/`[z` | fold                     | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)       |
+| `]s`/`[z` | spelling mistake         | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs) |
 
 ## Configuration
 
@@ -78,6 +78,10 @@ opts = {
     repeat_motions = true,
     -- Create `]q`/`[q` and `]l`/`[l` quickfix and location list mappings
     list_motions = true,
+    -- Create `]s`/`[s` key mappings for jumping to spelling mistakes
+    spell_motions = true,
+    -- Create `]z`/`[z` key mappings for jumping to folds
+    fold_motions = true,
   },
   integrations = {
     -- Integration with https://github.com/lewis6991/gitsigns.nvim

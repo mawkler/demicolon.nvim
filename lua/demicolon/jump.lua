@@ -2,8 +2,15 @@ local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move'
 
 local M = {}
 
----@param func fun(opts: (table | { forward: boolean }), additional_args?: ...) Repeatable function to be called. It should determine by the `forward` boolean whether to move forward or backward
----@param opts table | { forward: boolean } Options to pass to the function. Make sure to include the `forward` boolean
+---@alias DemicolonJumpOpts { forward: boolean }
+
+---@param keys string
+local function feedkeys(keys)
+  vim.api.nvim_feedkeys(vim.v.count1 .. keys, 'xn', true)
+end
+
+---@param func fun(opts: (table | DemicolonJumpOpts), additional_args?: ...) Repeatable function to be called. It should determine by the `forward` boolean whether to move forward or backward
+---@param opts table | DemicolonJumpOpts Options to pass to the function. Make sure to include the `forward` boolean
 ---@param additional_args? any[]
 function M.repeatably_do(func, opts, additional_args)
   opts = opts or {}
@@ -69,7 +76,7 @@ function M.diagnostic_jump_repeatably(opts)
 end
 
 ---@param type 'quickfix' | 'location'
----@param opts { forward: boolean }
+---@param opts DemicolonJumpOpts
 local function list_jump(type, list, opts)
   require('demicolon.jump').repeatably_do(function(o)
     if vim.tbl_isempty(list) then
@@ -84,7 +91,7 @@ local function list_jump(type, list, opts)
   end, { forward = opts.forward }, opts)
 end
 
----@param opts { forward: boolean }
+---@param opts DemicolonJumpOpts
 ---@return function
 function M.quickfix_list_jump(opts)
   return function()
@@ -93,12 +100,40 @@ function M.quickfix_list_jump(opts)
   end
 end
 
----@param opts { forward: boolean }
+---@param opts DemicolonJumpOpts
 ---@return function
 function M.location_list_jump(opts)
   return function()
     local list = vim.fn.getloclist(0)
     return list_jump('location', list, opts)
+  end
+end
+
+---@param opts DemicolonJumpOpts
+---@return function
+function M.fold_jump(opts)
+  return function()
+    require('demicolon.jump').repeatably_do(function(o)
+      local direction = o.forward and 'j' or 'k'
+      feedkeys('z' .. direction)
+    end, { forward = opts.forward }, opts)
+  end
+end
+
+---@param opts DemicolonJumpOpts
+---@return function
+function M.spell_jump(opts)
+  return function()
+    require('demicolon.jump').repeatably_do(function(o)
+      -- `]s`/`[s` only work if `spell` is enabled
+      local spell = vim.wo.spell
+      vim.wo.spell = true
+
+      local direction = o.forward and ']' or '['
+      feedkeys(direction .. 's')
+
+      vim.wo.spell = spell
+    end, { forward = opts.forward }, opts)
   end
 end
 
