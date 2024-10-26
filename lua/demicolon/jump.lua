@@ -75,23 +75,34 @@ function M.diagnostic_jump_repeatably(opts)
   return M.diagnostic_jump(opts)
 end
 
+---@class DemicolonListJumpOpts
+---@field forward boolean If `true`, jump forwards, otherwise jump backwards
+---@field file? boolean  If `true`, jump by file (see `:help cnfile`/`:help lnfile`)
+
 ---@param type 'quickfix' | 'location'
----@param opts DemicolonJumpOpts
+---@param opts DemicolonListJumpOpts
 local function list_jump(type, list, opts)
   require('demicolon.jump').repeatably_do(function(o)
     if vim.tbl_isempty(list) then
       return
     end
 
-    local direction = o.forward and 'next' or 'prev'
+    local direction = o.forward and 'n' or 'p'
     local prefix = type == 'quickfix' and 'c' or 'l'
+    local file_suffix = opts.file and 'f' or ''
+    local command = prefix .. direction .. file_suffix
+
+    -- Special case for `:help :lne` which is inconsistently named
+    if command == 'ln' then
+      command = 'lne'
+    end
 
     ---@diagnostic disable-next-line: param-type-mismatch
-    pcall(vim.cmd, vim.v.count1 .. prefix .. direction)
+    pcall(vim.cmd, vim.v.count1 .. command)
   end, { forward = opts.forward }, opts)
 end
 
----@param opts DemicolonJumpOpts
+---@param opts DemicolonListJumpOpts
 ---@return function
 function M.quickfix_list_jump(opts)
   return function()

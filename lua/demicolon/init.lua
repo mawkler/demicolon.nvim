@@ -10,7 +10,7 @@ local M = {}
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
 ---@field diagnostic_motions? boolean Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps.
 ---@field repeat_motions? boolean Create `;` and `,` key mappings
----@field list_motions? boolean Create `]q`/`[q` and `]l`/`[l` quickfix and location list mappings
+---@field list_motions? boolean Create `]q`/`[q`/`]<C-q>`/`[<C-q>` and `]l`/`[l`/`]<C-l>`/`[<C-l>` quickfix and location list mappings
 ---@field spell_motions? boolean Create `]s`/`[s` key mappings for jumping to spelling mistakes
 ---@field fold_motions? boolean Create `]z`/`[z` key mappings for jumping to folds
 

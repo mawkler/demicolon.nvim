@@ -51,12 +51,14 @@ demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.
 
 ### Native Neovim motions
 
-| Motion    | Jumps to next/pevious... | Help page with more information                                                                                   |
-| --------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| `]q`/`[q` | item in quickfix list    | [`:help ]q`](https://neovim.io/doc/user/motion.html#]q)/[`:help [q`](https://neovim.io/doc/user/motion.html#[q)   |
-| `]l`/`[l` | item in location list    | [`:help ]l`](https://neovim.io/doc/user/motion.html#]l)/[`:help [l`](https://neovim.io/doc/user/motion.html#[l)   |
-| `]z`/`[z` | fold                     | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)       |
-| `]s`/`[z` | spelling mistake         | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs) |
+| Motion            | Jumps to next/pevious... | Help page with more information                                                                                                             |
+| ----------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `]q`/`[q`         | item in quickfix list    | [`:help ]q`](https://neovim.io/doc/user/quickfix.html#%5Dq)/[`:help [q`](https://neovim.io/doc/user/quickfix.html#%5Bq)                     |
+| `]l`/`[l`         | item in location list    | [`:help ]l`](https://neovim.io/doc/user/quickfix.html#%5Dl)/[`:help [l`](https://neovim.io/doc/user/quickfix.html#%5Bl)                     |
+| `]<C-q>`/`[<C-q>` | file in quickfix list    | [`:help ]CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-Q)/[`:help [CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-Q) |
+| `]<C-l>`/`[<C-l>` | file in location list    | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
+| `]z`/`[z`         | fold                     | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)                                 |
+| `]s`/`[z`         | spelling mistake         | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
 
 ## Configuration
 
@@ -70,13 +72,13 @@ opts = {
   },
   -- Create default keymaps
   keymaps = {
-    -- Create `t`/`T`/`f`/`F` key mappings
+    -- Create t/T/f/F key mappings
     horizontal_motions = true,
     -- Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps
     diagnostic_motions = true,
-    -- Create `;` and `,` key mappings
+    -- Create ; and , key mappings
     repeat_motions = true,
-    -- Create `]q`/`[q` and `]l`/`[l` quickfix and location list mappings
+    -- Create ]q/[q/]<C-q>/[<C-q> and ]l/[l/]<C-l>/[<C-l> quickfix and location list mappings
     list_motions = true,
     -- Create `]s`/`[s` key mappings for jumping to spelling mistakes
     spell_motions = true,
