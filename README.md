@@ -1,8 +1,14 @@
 # demicolon.nvim
 
-In addition to repeating `t`/`T`/`f`/`F` motions, this plugin lets you repeat diagnostic jumps (e.g. `]d`/`[d`) and [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) jumps (e.g. `]f`/`[f`) with the `;`/`,` keys.
+In addition to repeating just the `t`/`T`/`f`/`F` motions with `;` and `,`, demicolon.nvim also lets you use them to repeat other types of motions:
 
-This plugin also integrates with [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim).
+- [Native Neovim motions](#native-neovim-motions) (e.g. `]q/[q`)
+- [Diagnostic jumps](#diagnostic-motions) (e.g. `]d`/`[d`)
+- [nvim-treesitter-textobjects](#treesitter-text-object-motions) (e.g. `]f`/`[f`)
+- [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) (`]c`/`[c`)
+- [neotest](https://github.com/nvim-neotest/neotest) (e.g. `]t`/`[t`)
+
+See [**Usage**](#usage) and [**Configuration**](#configuration) for more information.
 
 https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
@@ -60,6 +66,19 @@ demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.
 | `]z`/`[z`         | fold                     | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)                                 |
 | `]s`/`[z`         | spelling mistake         | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
 
+### [Gitsigns](https://github.com/lewis6991/gitsigns.nvim) motions
+
+| Motion    | Jumps to next/pevious... | Help page with more information |
+| --------- | ------------------------ | ------------------------------- |
+| `]c`/`[c` | Git hunk                 | `:help gitsigns.nav_hunk()`     |
+
+### [Neotest](https://github.com/nvim-neotest/neotest) motions
+
+| Motion    | Jumps to next/pevious... | Help page with more information |
+| --------- | ------------------------ | ------------------------------- |
+| `]t`/`[t` | Test                     | `:help neotest.jump`            |
+| `]T`/`[T` | Failed test              | `:help neotest.jump`            |
+
 ## Configuration
 
 Default options:
@@ -94,13 +113,27 @@ opts = {
         prev = '[c',
       },
     },
+    -- Integration with https://github.com/nvim-neotest/neotest
+    neotest = {
+      enabled = true,
+      keymaps = {
+        test = {
+          next = ']t',
+          prev = '[t',
+        },
+        failed_test = {
+          next = ']T',
+          prev = '[T',
+        },
+      },
+    },
   },
 }
 ```
 
 ### Custom jumps
 
-You can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [gitsigns.nvim integration](./lua/demicolon/integrations/gitsigns.lua) for inspiration.
+You can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [neotest integration](./lua/demicolon/integrations/neotest.lua) for inspiration.
 
 ### eyeliner.nvim integration
 

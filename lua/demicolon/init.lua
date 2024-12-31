@@ -1,5 +1,4 @@
 local keymaps = require('demicolon.keymaps')
-local jump = require('demicolon.jump')
 
 local M = {}
 
@@ -14,16 +13,25 @@ local M = {}
 ---@field spell_motions? boolean Create `]s`/`[s` key mappings for jumping to spelling mistakes
 ---@field fold_motions? boolean Create `]z`/`[z` key mappings for jumping to folds
 
----@class DemicolonGitsignsKeymapOptions
+---@class DemicolonIntegrationKeymaps
 ---@field next? string
 ---@field prev? string
 
 ---@class DemicolonGitsignsOptions
 ---@field enabled? boolean
----@field keymaps? DemicolonGitsignsKeymapOptions
+---@field keymaps? DemicolonIntegrationKeymaps
+
+---@class DemicolonNeotestKeymapOptions
+---@field test? DemicolonIntegrationKeymaps
+---@field failed_test? DemicolonIntegrationKeymaps
+
+---@class DemicolonNeotestOptions
+---@field enabled? boolean
+---@field keymaps? DemicolonNeotestKeymapOptions
 
 ---@class DemicolonIntegrationOptions
 ---@field gitsigns? DemicolonGitsignsOptions Integration with https://github.com/lewis6991/gitsigns.nvim
+---@field neotest? DemicolonNeotestOptions Integration with https://github.com/nvim-neotest/neotest
 
 ---@class DemicolonOptions
 ---@field diagnostic? DemicolonDiagnosticOptions Diagnostic options
@@ -47,6 +55,19 @@ local options = {
       keymaps = {
         next = ']c',
         prev = '[c',
+      },
+    },
+    neotest = {
+      enabled = true,
+      keymaps = {
+        test = {
+          next = ']t',
+          prev = '[t',
+        },
+        failed_test = {
+          next = ']T',
+          prev = '[T',
+        },
       },
     },
   },
@@ -87,6 +108,10 @@ function M.setup(opts)
 
   if options.integrations.gitsigns.enabled then
     require('demicolon.integrations.gitsigns').create_keymaps()
+  end
+
+  if options.integrations.neotest.enabled then
+    require('demicolon.integrations.neotest').create_keymaps()
   end
 end
 
