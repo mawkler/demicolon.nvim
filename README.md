@@ -1,6 +1,6 @@
 # demicolon.nvim
 
-In addition to repeating just the `t`/`T`/`f`/`F` motions with `;` and `,`, demicolon.nvim also lets you use them to repeat other types of motions:
+In addition to repeating just the `t`/`T`/`f`/`F` motions with `;` (repeat forward) and `,` (repeat backward), demicolon.nvim also lets you use them to repeat other types of motions:
 
 - [Native Neovim motions](#native-neovim-motions) (e.g. `]q/[q`)
 - [Diagnostic jumps](#diagnostic-motions) (e.g. `]d`/`[d`)
@@ -64,7 +64,7 @@ demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.
 | `]<C-q>`/`[<C-q>` | file in quickfix list    | [`:help ]CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-Q)/[`:help [CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-Q) |
 | `]<C-l>`/`[<C-l>` | file in location list    | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
 | `]z`/`[z`         | fold                     | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)                                 |
-| `]s`/`[z`         | spelling mistake         | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
+| `]s`/`[s`         | spelling mistake         | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
 
 ### [Gitsigns](https://github.com/lewis6991/gitsigns.nvim) motions
 
@@ -133,7 +133,7 @@ opts = {
 
 ### Custom jumps
 
-You can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [neotest integration](./lua/demicolon/integrations/neotest.lua) for inspiration.
+You can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [neotest integration](./lua/demicolon/integrations/neotest.lua#L4-L17) for inspiration.
 
 ### eyeliner.nvim integration
 
