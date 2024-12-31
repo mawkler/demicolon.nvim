@@ -32,7 +32,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 After pressing any of the keymaps below, demicolon.nvim lets you repeat them with `;` and `,`.
 
-### Vertical motions (`t`/`T`/`f`/`F`)
+### `t`/`T`/`f`/`F` motions
 
 See [`:help t`](https://neovim.io/doc/user/motion.html#t), [`:help T`](https://neovim.io/doc/user/motion.html#T), [`:help f`](https://neovim.io/doc/user/motion.html#f), and [`:help F`](https://neovim.io/doc/user/motion.html#F) respectively.
 
