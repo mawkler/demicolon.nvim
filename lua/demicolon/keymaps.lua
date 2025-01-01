@@ -42,17 +42,17 @@ end
 function M.create_default_list_keymaps()
   local qf_jump = jump.quickfix_list_jump
 
-  map(nxo, ']q', qf_jump({ forward = true, desc = 'Next quickfix list item' }))
-  map(nxo, '[q', qf_jump({ forward = false, desc = 'Previous quickfix list item' }))
-  map(nxo, ']<C-q>', qf_jump({ forward = true, file = true, desc = 'Next quickfix list file' }))
-  map(nxo, '[<C-q>', qf_jump({ forward = false, file = true, desc = 'Previous quickfix list file' }))
+  map(nxo, ']q', qf_jump({ forward = true }), { desc = 'Next quickfix list item' })
+  map(nxo, '[q', qf_jump({ forward = false }), { desc = 'Previous quickfix list item' })
+  map(nxo, ']<C-q>', qf_jump({ forward = true, file = true }), { desc = 'Next quickfix list file' })
+  map(nxo, '[<C-q>', qf_jump({ forward = false, file = true }), { desc = 'Previous quickfix list file' })
 
   local ll_jump = jump.location_list_jump
 
-  map(nxo, ']l', ll_jump({ forward = true, desc = 'Next location list item' }))
-  map(nxo, '[l', ll_jump({ forward = false, desc = 'Previous location list item' }))
-  map(nxo, ']<C-l>', ll_jump({ forward = true, file = true, desc = 'Next location list file' }))
-  map(nxo, '[<C-l>', ll_jump({ forward = false, file = true, desc = 'Previous location list file' }))
+  map(nxo, ']l', ll_jump({ forward = true }), { desc = 'Next location list item' })
+  map(nxo, '[l', ll_jump({ forward = false }), { desc = 'Previous location list item' })
+  map(nxo, ']<C-l>', ll_jump({ forward = true, file = true }), { desc = 'Next location list file' })
+  map(nxo, '[<C-l>', ll_jump({ forward = false, file = true }), { desc = 'Previous location list file' })
 end
 
 function M.create_default_spell_keymaps()
