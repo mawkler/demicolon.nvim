@@ -282,4 +282,4 @@ vim.keymap.set(nxo, ',', ts_repeatable_move.repeat_last_move_opposite)
 
 ## Credit
 
-The treesitter portion of this plugin is just a wrapper over [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects). Credit to them for making an awesome plugin!
+[nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) is used at the core of Demicolon's repeat logic. Credit to them for making an awesome plugin!

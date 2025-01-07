@@ -39,7 +39,7 @@ function M.horizontal_jump_repeatably(opts)
   return M.horizontal_jump(opts)
 end
 
----@class DemicolonDiagnosticJumpOpts: vim.diagnostic.JumpOpts
+---@class DemicolonDiagnosticJumpOpts: vim.diagnostic.GotoOpts
 ---@field forward boolean
 
 ---@param opts DemicolonDiagnosticJumpOpts Note that the `count` field will be overridden by `vim.v.count1`
