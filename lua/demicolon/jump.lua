@@ -48,8 +48,8 @@ function M.diagnostic_jump(opts)
   return function()
     M.repeatably_do(function(o)
       o = o or {}
-      local options = require('demicolon').get_options()
-      o.float = vim.tbl_extend('force', o, options.diagnostic.float)
+      local float_opts = require('demicolon').get_options().diagnostic.float
+      o.float = type(float_opts) == 'table' and vim.tbl_extend('force', o, float_opts) or float_opts
 
       local count = o.forward and 1 or -1
       o.count = count * vim.v.count1

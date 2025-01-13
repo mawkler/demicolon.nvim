@@ -3,7 +3,7 @@ local keymaps = require('demicolon.keymaps')
 local M = {}
 
 ---@class DemicolonDiagnosticOptions
----@field float? vim.diagnostic.Opts.Float Default options passed to diagnostic floating window
+---@field float? boolean|vim.diagnostic.Opts.Float Default options passed to diagnostic floating window
 
 ---@class DemicolonKeymapsOptions
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
