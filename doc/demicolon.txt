@@ -1,0 +1,355 @@
+*demicolon.txt*          For NVIM v0.8.0          Last change: 2025 January 14
+
+==============================================================================
+Table of Contents                                *demicolon-table-of-contents*
+
+1. demicolon.nvim                                   |demicolon-demicolon.nvim|
+  - Installation                       |demicolon-demicolon.nvim-installation|
+  - Usage                                     |demicolon-demicolon.nvim-usage|
+  - Configuration                     |demicolon-demicolon.nvim-configuration|
+  - Credit                                   |demicolon-demicolon.nvim-credit|
+
+==============================================================================
+1. demicolon.nvim                                   *demicolon-demicolon.nvim*
+
+In addition to repeating just the `t`/`T`/`f`/`F` motions with `;` (repeat
+forward) and `,` (repeat backward), demicolon.nvim also lets you use them to
+repeat other types of motions:
+
+- |demicolon-native-neovim-motions| (e.g. `]q/[q`)
+- |demicolon-diagnostic-jumps| (e.g. `]d`/`[d`)
+- |demicolon-nvim-treesitter-textobjects| (e.g. `]f`/`[f`)
+- gitsigns.nvim <https://github.com/lewis6991/gitsigns.nvim> (`]c`/`[c`)
+- neotest <https://github.com/nvim-neotest/neotest> (e.g. `]t`/`[t`)
+
+See |demicolon-**usage**| and |demicolon-**configuration**| for more
+information.
+
+
+https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
+
+
+INSTALLATION                           *demicolon-demicolon.nvim-installation*
+
+With lazy.nvim <https://github.com/folke/lazy.nvim>:
+
+>lua
+    {
+      'mawkler/demicolon.nvim',
+      -- keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[', ']d', '[d' }, -- Uncomment this to lazy load
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-treesitter/nvim-treesitter-textobjects',
+      },
+      opts = {}
+    }
+<
+
+
+USAGE                                         *demicolon-demicolon.nvim-usage*
+
+After pressing any of the keymaps below, demicolon.nvim lets you repeat them
+with `;` and `,`.
+
+
+T/T/F/F MOTIONS ~
+
+See |`:help t`|, |`:help T`|, |`:help f`|, and |`:help F`| respectively.
+
+
+DIAGNOSTIC MOTIONS ~
+
+By default, demicolon.nvim will create the diagnostic motion keymaps below. See
+|demicolon-configuration| for info on how to disable default keymaps.
+
+  Motion   Description
+  -------- -----------------------------------------
+  ]d/[d    Next/previous diagnostic (any severity)
+  ]e/[e    Next/previous error
+  ]w/[w    Next/previous warning
+  ]i/[i    Next/previous information
+  ]h/[h    Next/previous hint
+
+TREESITTER TEXT-OBJECT MOTIONS ~
+
+demicolon.nvim lets you repeat any nvim-treesitter-textobjects
+<https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move>
+motion. For example: `]f` to "jump to next function", `]c` to "jump to next
+class", etc.
+
+
+  [!NOTE] To use treesitter text-objects you need to configure `textobjects.move`
+  in nvim-treesitter-textobjects
+  <https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move>.
+
+NATIVE NEOVIM MOTIONS ~
+
+  --------------------------------------------------------------------------------------
+  Motion          Jumps to        Help page with more information
+                  next/pevious…   
+  --------------- --------------- ------------------------------------------------------
+  ]q/[q           item in         :help ]q/:help [q
+                  quickfix list   
+
+  ]l/[l           item in         :help ]l/:help [l
+                  location list   
+
+  ]<C-q>/[<C-q>   file in         :help ]CTRL-Q/:help [CTRL-Q
+                  quickfix list   
+
+  ]<C-l>/[<C-l>   file in         :help ]CTRL-L/:help [CTRL-L
+                  location list   
+
+  ]z/[z           fold            :help zj/:help zk
+
+  ]s/[s           spelling        :help ]s/:help [s
+                  mistake         
+  --------------------------------------------------------------------------------------
+
+GITSIGNS MOTIONS ~
+
+  -----------------------------------------------------------------------
+  Motion    Jumps to next/pevious…     Help page with more information
+  --------- -------------------------- ----------------------------------
+  ]c/[c     Git hunk                   :help gitsigns.nav_hunk()
+
+  -----------------------------------------------------------------------
+
+NEOTEST MOTIONS ~
+
+  -----------------------------------------------------------------------
+  Motion    Jumps to next/pevious…     Help page with more information
+  --------- -------------------------- ----------------------------------
+  ]t/[t     Test                       :help neotest.jump
+
+  ]T/[T     Failed test                :help neotest.jump
+  -----------------------------------------------------------------------
+
+CONFIGURATION                         *demicolon-demicolon.nvim-configuration*
+
+Default options:
+
+>lua
+    opts = {
+      diagnostic = {
+        -- See `:help vim.diagnostic.Opts.Float`
+        float = {}
+      },
+      -- Create default keymaps
+      keymaps = {
+        -- Create t/T/f/F key mappings
+        horizontal_motions = true,
+        -- Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps
+        diagnostic_motions = true,
+        -- Create ; and , key mappings
+        repeat_motions = true,
+        -- Create ]q/[q/]<C-q>/[<C-q> and ]l/[l/]<C-l>/[<C-l> quickfix and location list mappings
+        list_motions = true,
+        -- Create `]s`/`[s` key mappings for jumping to spelling mistakes
+        spell_motions = true,
+        -- Create `]z`/`[z` key mappings for jumping to folds
+        fold_motions = true,
+      },
+      integrations = {
+        -- Integration with https://github.com/lewis6991/gitsigns.nvim
+        gitsigns = {
+          enabled = true,
+          keymaps = {
+            next = ']c',
+            prev = '[c',
+          },
+        },
+        -- Integration with https://github.com/nvim-neotest/neotest
+        neotest = {
+          enabled = true,
+          keymaps = {
+            test = {
+              next = ']t',
+              prev = '[t',
+            },
+            failed_test = {
+              next = ']T',
+              prev = '[T',
+            },
+          },
+        },
+      },
+    }
+<
+
+
+CUSTOM JUMPS ~
+
+You can create your own custom repeatable jumps using `repeatably_do()` in
+`demicolon.jump` <./lua/demicolon/jump.lua>. `repeatably_do()` takes a funcion
+as its first argument and options to be passed to that function as its second
+argument. Make sure that the options include a boolean `forward` field to
+determine whether the action should be forward or backward. Take a look at how
+I’ve implemented the neotest integration
+<./lua/demicolon/integrations/neotest.lua#L4-L17> for inspiration.
+
+
+EYELINER.NVIM INTEGRATION ~
+
+eyeliner.nvim <https://github.com/jinh0/eyeliner.nvim> can highlight unique
+letters in words when you press `t`/`T`/`f`/`F`. Below is my recommended
+configuration for using eyeliner.nvim together with demicolon.nvim.
+
+**NOTE:** make sure to set `keymaps.horizontal_motions = false` in your
+demicolon setup if you want to use this config.
+
+>lua
+    return {
+      'jinh0/eyeliner.nvim',
+      -- keys = { 't', 'f', 'T', 'F' }, -- Uncomment this to lazy load eyeliner.nvim
+      config = function()
+        require('eyeliner').setup({
+          highlight_on_key = true,
+          default_keymaps = false,
+          dim = true, -- Optional
+        })
+    
+        local function eyeliner_jump(key)
+          local forward = vim.list_contains({ 't', 'f' }, key)
+          return function()
+            require('eyeliner').highlight({ forward = forward })
+            return require('demicolon.jump').horizontal_jump(key)()
+          end
+        end
+    
+        local nxo = { 'n', 'x', 'o' }
+        local opts = { expr = true }
+    
+        vim.keymap.set(nxo, 'f', eyeliner_jump('f'), opts)
+        vim.keymap.set(nxo, 'F', eyeliner_jump('F'), opts)
+        vim.keymap.set(nxo, 't', eyeliner_jump('t'), opts)
+        vim.keymap.set(nxo, 'T', eyeliner_jump('T'), opts)
+      end
+    }
+<
+
+
+FULL RECOMMENDED CONFIG ~
+
+Here is a full configuration, including nvim-treesitter-textobjects
+<https://github.com/nvim-treesitter/nvim-treesitter-textobjects> and
+eyeliner.nvim <https://github.com/jinh0/eyeliner.nvim>:
+
+Click here to see the code ~
+
+>lua
+    require('lazy').setup({
+      {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        dependencies = 'nvim-treesitter/nvim-treesitter',
+        build = ':TSUpdate',
+        config = function()
+          require('nvim-treesitter.configs').setup({
+            ensure_installed = 'all',
+            textobjects = {
+              move = {
+                enable = true,
+                goto_next_start = {
+                  ["]f"] = "@function.outer",
+                  ["]a"] = "@argument.outer",
+                  ["]m"] = "@method.outer",
+                  -- ...
+                },
+                goto_previous_start = {
+                  ["[f"] = "@function.outer",
+                  ["[a"] = "@argument.outer",
+                  ["[m"] = "@method.outer",
+                  -- ...
+                },
+              },
+            },
+          })
+        end,
+      },
+      {
+        'jinh0/eyeliner.nvim',
+        keys = { 't', 'f', 'T', 'F' },
+        opts = {
+          highlight_on_key = true,
+          dim = true,
+          default_keymaps = false,
+        }
+      },
+      {
+        'mawkler/demicolon.nvim',
+        dependencies = {
+          'jinh0/eyeliner.nvim',
+          'nvim-treesitter/nvim-treesitter',
+          'nvim-treesitter/nvim-treesitter-textobjects'
+        },
+        keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[', ']d', '[d' },
+        config = function()
+          require('demicolon').setup({
+            keymaps = {
+              horizontal_motions = false,
+            },
+          })
+    
+          local function eyeliner_jump(key)
+            local forward = vim.list_contains({ 't', 'f' }, key)
+            return function()
+              require('eyeliner').highlight({ forward = forward })
+              return require('demicolon.jump').horizontal_jump(key)()
+            end
+          end
+    
+          local nxo = { 'n', 'x', 'o' }
+          local opts = { expr = true }
+    
+          vim.keymap.set(nxo, 'f', eyeliner_jump('f'), opts)
+          vim.keymap.set(nxo, 'F', eyeliner_jump('F'), opts)
+          vim.keymap.set(nxo, 't', eyeliner_jump('t'), opts)
+          vim.keymap.set(nxo, 'T', eyeliner_jump('T'), opts)
+        end
+      }
+    })
+<
+
+Here’s
+<https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#built-in-textobjects>
+the full list of available treesitter textobjects.
+
+
+“I WANT ;/, TO REMEMBER THE DIRECTION OF THE ORIGINAL JUMP” ~
+
+Neovim’s default behaviour is for `;`/`,` to remember the direction of the
+jump that they repeat. That means that if you for instance repeat a `T` motion
+(as opposed to `t`) with `;` it will move you to the _left_. A lot of people
+prefer if `;` always moves you to the right and `,` always to the left, which
+is how demicolon works by default.
+
+If you prefer Neovim’s default behaviour you can disable demicolon’s
+default `;`/`,` keymaps and remap them manually like this:
+
+Click here to see the code ~
+
+>lua
+    require('demicolon').setup({
+      keymaps = {
+        repeat_motions = false,
+      },
+    })
+    
+    local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+    local nxo = { 'n', 'x', 'o' }
+    
+    vim.keymap.set(nxo, ';', ts_repeatable_move.repeat_last_move)
+    vim.keymap.set(nxo, ',', ts_repeatable_move.repeat_last_move_opposite)
+<
+
+
+CREDIT                                       *demicolon-demicolon.nvim-credit*
+
+nvim-treesitter-textobjects
+<https://github.com/nvim-treesitter/nvim-treesitter-textobjects> is used at the
+core of Demicolon’s repeat logic. Credit to them for making an awesome
+plugin!
+
+Generated by panvimdoc <https://github.com/kdheepak/panvimdoc>
+
+vim:tw=78:ts=8:noet:ft=help:norl:
