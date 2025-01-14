@@ -5,6 +5,8 @@ jobs:
     if: github.ref == 'refs/heads/main'
     name: Pandoc to Vimdoc
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # git-auto-commit-action needs push permissions
     steps:
       - uses: actions/checkout@v2
       - name: panvimdoc
