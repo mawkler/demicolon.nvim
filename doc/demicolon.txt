@@ -1,4 +1,4 @@
-*demicolon.txt*          For NVIM v0.8.0          Last change: 2025 January 14
+*demicolon.txt*          For NVIM v0.8.0          Last change: 2025 January 24
 
 ==============================================================================
 Table of Contents                                *demicolon-table-of-contents*
@@ -335,11 +335,10 @@ Click here to see the code ~
       },
     })
     
-    local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
     local nxo = { 'n', 'x', 'o' }
     
-    vim.keymap.set(nxo, ';', ts_repeatable_move.repeat_last_move)
-    vim.keymap.set(nxo, ',', ts_repeatable_move.repeat_last_move_opposite)
+    vim.keymap.set(nxo, ';', require('demicolon.repeat_jump').next)
+    vim.keymap.set(nxo, ',', require('demicolon.repeat_jump').prev)
 <
 
 
