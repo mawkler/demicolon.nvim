@@ -271,11 +271,10 @@ require('demicolon').setup({
   },
 })
 
-local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
 local nxo = { 'n', 'x', 'o' }
 
-vim.keymap.set(nxo, ';', ts_repeatable_move.repeat_last_move)
-vim.keymap.set(nxo, ',', ts_repeatable_move.repeat_last_move_opposite)
+vim.keymap.set(nxo, ';', require('demicolon.repeat_jump').next)
+vim.keymap.set(nxo, ',', require('demicolon.repeat_jump').prev)
 ```
 
 </details>
