@@ -1,4 +1,4 @@
-*demicolon.txt*          For NVIM v0.8.0          Last change: 2025 January 24
+*demicolon.txt*          For NVIM v0.8.0          Last change: 2025 January 29
 
 ==============================================================================
 Table of Contents                                *demicolon-table-of-contents*
