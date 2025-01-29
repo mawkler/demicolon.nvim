@@ -30,7 +30,7 @@ local M = {}
 ---@field keymaps? DemicolonNeotestKeymapOptions
 
 ---@class DemicolonVimtexKeymapOptions
----@field section_begin? DemicolonIntegrationKeymaps
+---@field section_start? DemicolonIntegrationKeymaps
 ---@field section_end? DemicolonIntegrationKeymaps
 ---@field frame_start? DemicolonIntegrationKeymaps
 ---@field frame_end? DemicolonIntegrationKeymaps
@@ -90,7 +90,7 @@ local options = {
     vimtex = {
       enabled = true,
       keymaps = {
-        section_begin = {
+        section_start = {
           next = '][',
           prev = '[[',
         },

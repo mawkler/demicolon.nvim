@@ -67,8 +67,8 @@ function M.create_keymaps()
     group = vim.api.nvim_create_augroup('demicolon_vimtex_keymap', {}),
     pattern = "tex",
     callback = function()
-      M.vimtex_map(keymaps.section_begin.next, "][", "Next section begin")
-      M.vimtex_map(keymaps.section_begin.prev, "[[", "Previous section begin")
+      M.vimtex_map(keymaps.section_start.next, "][", "Next section start")
+      M.vimtex_map(keymaps.section_start.prev, "[[", "Previous section start")
 
       M.vimtex_map(keymaps.section_end.next, "]]", "Next section end")
       M.vimtex_map(keymaps.section_end.prev, "[]", "Previous section end")
