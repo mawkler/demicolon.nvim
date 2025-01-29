@@ -29,9 +29,26 @@ local M = {}
 ---@field enabled? boolean
 ---@field keymaps? DemicolonNeotestKeymapOptions
 
+---@class DemicolonVimtexKeymapOptions
+---@field section_begin? DemicolonIntegrationKeymaps
+---@field section_end? DemicolonIntegrationKeymaps
+---@field frame_start? DemicolonIntegrationKeymaps
+---@field frame_end? DemicolonIntegrationKeymaps
+---@field math_start? DemicolonIntegrationKeymaps
+---@field math_end? DemicolonIntegrationKeymaps
+---@field comment_start? DemicolonIntegrationKeymaps
+---@field comment_end? DemicolonIntegrationKeymaps
+---@field environment_start? DemicolonIntegrationKeymaps
+---@field environment_end? DemicolonIntegrationKeymaps
+
+---@class DemicolonVimtexOptions
+---@field enabled? boolean
+---@field keymaps? DemicolonVimtexKeymapOptions
+
 ---@class DemicolonIntegrationOptions
 ---@field gitsigns? DemicolonGitsignsOptions Integration with https://github.com/lewis6991/gitsigns.nvim
 ---@field neotest? DemicolonNeotestOptions Integration with https://github.com/nvim-neotest/neotest
+---@field vimtex? DemicolonVimtexOptions Integration with https://github.com/lervag/vimtex
 
 ---@class DemicolonOptions
 ---@field diagnostic? DemicolonDiagnosticOptions Diagnostic options
@@ -70,6 +87,51 @@ local options = {
         },
       },
     },
+    vimtex = {
+      enabled = true,
+      keymaps = {
+        section_begin = {
+          next = '][',
+          prev = '[[',
+        },
+        section_end = {
+          next = ']]',
+          prev = '[]',
+        },
+        frame_start = {
+          next = ']r',
+          prev = '[r',
+        },
+        frame_end = {
+          next = ']R',
+          prev = '[R',
+        },
+        math_start = {
+          next = ']n',
+          prev = '[n',
+        },
+        math_end = {
+          next = ']N',
+          prev = '[N',
+        },
+        comment_start = {
+          next = ']/',
+          prev = '[/',
+        },
+        comment_end = {
+          next = ']%',
+          prev = '[%',
+        },
+        environment_start = {
+          next = ']m',
+          prev = '[m',
+        },
+        environment_end = {
+          next = ']M',
+          prev = '[M',
+        },
+      }
+    }
   },
 }
 
@@ -112,6 +174,10 @@ function M.setup(opts)
 
   if options.integrations.neotest.enabled then
     require('demicolon.integrations.neotest').create_keymaps()
+  end
+
+  if options.integrations.vimtex.enabled then
+    require('demicolon.integrations.vimtex').create_keymaps()
   end
 end
 

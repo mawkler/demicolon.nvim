@@ -10,7 +10,7 @@ function M.jump(options)
       else
         local exists, gitsigns = pcall(require, 'gitsigns')
         if not exists then
-          vim.notify('diagnostic.nvim: gitsigns.nvim is not installed', vim.log.levels.WARN)
+          vim.notify('demicolon.nvim: gitsigns.nvim is not installed', vim.log.levels.WARN)
           return
         end
 
