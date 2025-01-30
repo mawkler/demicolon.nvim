@@ -79,8 +79,8 @@ function M.create_keymaps()
       M.vimtex_map(keymaps.comment_start.next, ']/', 'Next comment start')
       M.vimtex_map(keymaps.comment_start.prev, '[/', 'Previous comment start')
 
-      M.vimtex_map(keymaps.comment_end.next, ']%', 'Next comment end')
-      M.vimtex_map(keymaps.comment_end.prev, '[%', 'Previous comment end')
+      M.vimtex_map(keymaps.comment_end.next, ']*', 'Next comment end')
+      M.vimtex_map(keymaps.comment_end.prev, '[*', 'Previous comment end')
 
       M.vimtex_map(keymaps.environment_start.next, ']m', 'Next environment start')
       M.vimtex_map(keymaps.environment_start.prev, '[m', 'Previous environment start')

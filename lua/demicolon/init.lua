@@ -119,8 +119,8 @@ local options = {
           prev = '[/',
         },
         comment_end = {
-          next = ']%',
-          prev = '[%',
+          next = ']*',
+          prev = '[*',
         },
         environment_start = {
           next = ']m',
