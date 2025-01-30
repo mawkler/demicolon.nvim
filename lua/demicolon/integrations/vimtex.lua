@@ -4,11 +4,6 @@ local M = {}
 function M.jump(options)
   return function()
     require('demicolon.jump').repeatably_do(function(opts)
-      if vim.fn.exists(':VimtexCompile') ~= 2 then
-        vim.notify('demicolon.nvim: vimtex is not installed', vim.log.levels.WARN)
-        return
-      end
-
       local direction = (opts.forward == nil or opts.forward) and ']' or '['
       local vimtex_mapping = direction .. opts.vimtex_key
 
@@ -59,6 +54,10 @@ function M.create_keymaps()
     group = vim.api.nvim_create_augroup('demicolon_vimtex_keymap', {}),
     pattern = 'tex',
     callback = function()
+      if vim.fn.exists(':VimtexCompile') ~= 2 then
+        return
+      end
+
       M.vimtex_map(keymaps.section_start.next, '][', 'Next section start')
       M.vimtex_map(keymaps.section_start.prev, '[[', 'Previous section start')
 
