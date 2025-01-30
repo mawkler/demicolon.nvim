@@ -9,16 +9,8 @@ function M.jump(options)
         return
       end
 
-      local direction = (opts.forward == nil or opts.forward) and 'next' or 'prev'
-
-      local vimtex_key = opts.vimtex_key
-      local vimtex_mapping = ""
-
-      if direction == "prev" then
-        vimtex_mapping = "[" .. vimtex_key
-      else
-        vimtex_mapping = "]" .. vimtex_key
-      end
+      local direction = (opts.forward == nil or opts.forward) and ']' or '['
+      local vimtex_mapping = direction .. opts.vimtex_key
 
       -- Vimtex does not use lua to map to their functions, but special <Plug>
       -- mappings, which we have to map to.
