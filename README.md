@@ -20,6 +20,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   'mawkler/demicolon.nvim',
   -- keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[', ']d', '[d' }, -- Uncomment this to lazy load
+  -- ft = 'tex',                                                    -- ...and this if you use LaTeX
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-treesitter/nvim-treesitter-textobjects',
