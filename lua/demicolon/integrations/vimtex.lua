@@ -29,7 +29,7 @@ function M.vimtex_map(key, vimtex_mapping, desc)
   -- Override only if it's a vimtex mapping or not set.
   -- That's roughly the behavior of vimtex as well:
   -- https://github.com/lervag/vimtex/blob/83e331dcad5ce28012e656eea3906b5b897db2ba/autoload/vimtex.vim#L415
-  local existing_lhs = vim.fn.maparg(vimtex_mapping, 'nxo')
+  local existing_lhs = vim.fn.maparg(vimtex_mapping, 'n')
   if (existing_lhs ~= '' and existing_lhs:sub(1, 13) ~= '<Plug>(vimtex') then
     return
   end
@@ -37,9 +37,8 @@ function M.vimtex_map(key, vimtex_mapping, desc)
   local vimtex_key = vimtex_mapping:sub(2, 2)
   local forward = vimtex_mapping:sub(1, 1) == ']'
 
-  local nxo = { 'n', 'x', 'o' }
-
-  vim.keymap.set(nxo, key, M.jump({ forward = forward, vimtex_key = vimtex_key }), { desc = desc, buffer = true })
+  vim.keymap.set('n', key, M.jump({ forward = forward, vimtex_key = vimtex_key }),
+    { desc = desc, buffer = true, noremap = true, silent = true })
 end
 
 function M.create_keymaps()
