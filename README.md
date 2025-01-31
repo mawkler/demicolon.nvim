@@ -20,6 +20,7 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 {
   'mawkler/demicolon.nvim',
   -- keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[', ']d', '[d' }, -- Uncomment this to lazy load
+  -- ft = 'tex',                                                    -- ...and this if you use LaTeX
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -79,6 +80,23 @@ demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.
 | `]t`/`[t` | Test                     | `:help neotest.jump`            |
 | `]T`/`[T` | Failed test              | `:help neotest.jump`            |
 
+### [VimTeX](https://github.com/lervag/vimtex) motions
+
+Note that these mappings are only created in normal mode and visual mode. For some reason they don't work when created for operator-pending mode.
+
+| Motion    | Jumps to next/pevious... | Help page with more information |
+| --------- | ------------------------ | ------------------------------- |
+| `][`/`[[` | Section start            | `:help vimtex-motions`          |
+| `]]`/`[]` | Section end              | `:help vimtex-motions`          |
+| `]r`/`[r` | Frame start              | `:help vimtex-motions`          |
+| `]R`/`[R` | Frame end                | `:help vimtex-motions`          |
+| `]n`/`[n` | Math start               | `:help vimtex-motions`          |
+| `]N`/`[N` | Math end                 | `:help vimtex-motions`          |
+| `]/`/`[/` | Comment start            | `:help vimtex-motions`          |
+| `]*`/`[*` | Comment end              | `:help vimtex-motions`          |
+| `]m`/`[m` | Environment start        | `:help vimtex-motions`          |
+| `]M`/`[M` | Environment end          | `:help vimtex-motions`          |
+
 ## Configuration
 
 Default options:
@@ -126,6 +144,52 @@ opts = {
           prev = '[T',
         },
       },
+    },
+    -- Integration with https://github.com/lervag/vimtex
+    vimtex = {
+      enabled = true,
+      keymaps = {
+        section_start = {
+          next = '][',
+          prev = '[[',
+        },
+        section_end = {
+          next = ']]',
+          prev = '[]',
+        },
+        frame_start = {
+          next = ']r',
+          prev = '[r',
+        },
+        frame_end = {
+          next = ']R',
+          prev = '[R',
+        },
+        math_start = {
+          next = ']n',
+          prev = '[n',
+        },
+        math_end = {
+          next = ']N',
+          prev = '[N',
+        },
+        comment_start = {
+          next = ']/',
+          prev = '[/',
+        },
+        comment_end = {
+          next = ']*',
+          prev = '[*',
+        },
+        environment_start = {
+          next = ']m',
+          prev = '[m',
+        },
+        environment_end = {
+          next = ']M',
+          prev = '[M',
+        },
+      }
     },
   },
 }
