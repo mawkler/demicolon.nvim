@@ -82,6 +82,8 @@ demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.
 
 ### [VimTeX](https://github.com/lervag/vimtex) motions
 
+Note that these are only mapped in `n` and `x` modes.
+
 | Motion    | Jumps to next/pevious... | Help page with more information |
 | --------- | ------------------------ | ------------------------------- |
 | `][`/`[[` | Section start            | `:help vimtex-motions`          |
