@@ -59,10 +59,10 @@ function M.create_keymaps()
         return
       end
 
-      M.vimtex_map(keymaps.section_start.next, '][', 'Next section start')
+      M.vimtex_map(keymaps.section_start.next, ']]', 'Next section start')
       M.vimtex_map(keymaps.section_start.prev, '[[', 'Previous section start')
 
-      M.vimtex_map(keymaps.section_end.next, ']]', 'Next section end')
+      M.vimtex_map(keymaps.section_end.next, '][', 'Next section end')
       M.vimtex_map(keymaps.section_end.prev, '[]', 'Previous section end')
 
       M.vimtex_map(keymaps.frame_start.next, ']r', 'Next frame start')

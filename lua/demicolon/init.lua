@@ -91,11 +91,11 @@ local options = {
       enabled = true,
       keymaps = {
         section_start = {
-          next = '][',
+          next = ']]',
           prev = '[[',
         },
         section_end = {
-          next = ']]',
+          next = '][',
           prev = '[]',
         },
         frame_start = {
