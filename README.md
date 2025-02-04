@@ -86,8 +86,8 @@ Note that these mappings are only created in normal mode and visual mode. For so
 
 | Motion    | Jumps to next/pevious... | Help page with more information |
 | --------- | ------------------------ | ------------------------------- |
-| `][`/`[[` | Section start            | `:help vimtex-motions`          |
-| `]]`/`[]` | Section end              | `:help vimtex-motions`          |
+| `]]`/`[[` | Section start            | `:help vimtex-motions`          |
+| `][`/`[]` | Section end              | `:help vimtex-motions`          |
 | `]r`/`[r` | Frame start              | `:help vimtex-motions`          |
 | `]R`/`[R` | Frame end                | `:help vimtex-motions`          |
 | `]n`/`[n` | Math start               | `:help vimtex-motions`          |
@@ -150,11 +150,11 @@ opts = {
       enabled = true,
       keymaps = {
         section_start = {
-          next = '][',
+          next = ']]',
           prev = '[[',
         },
         section_end = {
-          next = ']]',
+          next = '][',
           prev = '[]',
         },
         frame_start = {
