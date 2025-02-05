@@ -1,4 +1,4 @@
-*demicolon.txt*          For NVIM v0.8.0          Last change: 2025 January 31
+*demicolon.txt*          For NVIM v0.8.0         Last change: 2025 February 05
 
 ==============================================================================
 Table of Contents                                *demicolon-table-of-contents*
@@ -134,9 +134,9 @@ some reason they don’t work when created for operator-pending mode.
   -----------------------------------------------------------------------
   Motion    Jumps to next/pevious…     Help page with more information
   --------- -------------------------- ----------------------------------
-  ][/[[     Section start              :help vimtex-motions
+  ]]/[[     Section start              :help vimtex-motions
 
-  ]]/[]     Section end                :help vimtex-motions
+  ][/[]     Section end                :help vimtex-motions
 
   ]r/[r     Frame start                :help vimtex-motions
 
@@ -208,11 +208,11 @@ Default options:
           enabled = true,
           keymaps = {
             section_start = {
-              next = '][',
+              next = ']]',
               prev = '[[',
             },
             section_end = {
-              next = ']]',
+              next = '][',
               prev = '[]',
             },
             frame_start = {
