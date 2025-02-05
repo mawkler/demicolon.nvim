@@ -255,15 +255,15 @@ require('lazy').setup({
           move = {
             enable = true,
             goto_next_start = {
-              ["]f"] = "@function.outer",
-              ["]a"] = "@argument.outer",
-              ["]m"] = "@method.outer",
+              [']f'] = '@function.outer',
+              [']a'] = '@argument.outer',
+              [']m'] = '@method.outer',
               -- ...
             },
             goto_previous_start = {
-              ["[f"] = "@function.outer",
-              ["[a"] = "@argument.outer",
-              ["[m"] = "@method.outer",
+              ['[f'] = '@function.outer',
+              ['[a'] = '@argument.outer',
+              ['[m'] = '@method.outer',
               -- ...
             },
           },

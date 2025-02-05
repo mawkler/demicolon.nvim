@@ -29,8 +29,8 @@ function M.create_keymaps()
 
   local nxo = { 'n', 'x', 'o' }
 
-  vim.keymap.set(nxo, options.keymaps.next, M.jump({ forward = true }), { desc = "Next hunk" })
-  vim.keymap.set(nxo, options.keymaps.prev, M.jump({ forward = false }), { desc = "Previous hunk" })
+  vim.keymap.set(nxo, options.keymaps.next, M.jump({ forward = true }), { desc = 'Next hunk' })
+  vim.keymap.set(nxo, options.keymaps.prev, M.jump({ forward = false }), { desc = 'Previous hunk' })
 end
 
 return M
