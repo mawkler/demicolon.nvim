@@ -2,7 +2,9 @@ local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move'
 
 local M = {}
 
----@alias DemicolonJumpOpts { forward: boolean }
+---@class DemicolonJumpOpts
+---@field forward boolean `true` if the jump is forwards, `false` if it is backwards
+---@field repeated? boolean `true` if the jump was repeated with `;`/`,`
 
 ---@param keys string
 local function feedkeys(keys)
