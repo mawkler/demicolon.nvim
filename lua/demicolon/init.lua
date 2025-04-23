@@ -8,8 +8,7 @@ local M = {}
 ---@class demicolon.keymaps.options
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
 ---@field repeat_motions? boolean Create `;` and `,` key mappings
----@field custom_keys? table<string> Keys for custom motion keys, not including the `]` prefix. I.e. if you want to add repeat support for the motion `]R`, add `'R'` to `custom_keys`
----@field native_keys? table<string> | false Native keys, many of them listed under `:help ]`. Set to `false` to disable
+---@field disabled_keys? table<string> Keys that shouldn't be repeatable (because aren't motions), excluding the prefix `]`/`[`
 
 ---@class demicolon.options
 ---@field diagnostic? demicolon.diagnostic.options Diagnostic options
@@ -18,50 +17,7 @@ local options = {
   keymaps = {
     horizontal_motions = true,
     repeat_motions = true,
-    custom_keys = {
-      'R', -- Vimtex frame end
-      'n', -- Vimtex math start
-      'N', -- Vimtex math end
-    },
-    native_keys = {
-      "'",
-      '#',
-      ')',
-      '*',
-      '/',
-      '`',
-      '[',
-      ']',
-      '{',
-      '}',
-      'A',
-      'B',
-      'D',
-      'I',
-      'L',
-      'M',
-      'P',
-      'Q',
-      'S',
-      'T',
-      'a',
-      'b',
-      'c',
-      'd',
-      'f',
-      'i',
-      'l',
-      'm',
-      'p',
-      'q',
-      'r',
-      's',
-      't',
-      'z',
-      'CTRL-L',
-      'CTRL-Q',
-      'CTRL-T',
-    }
+    disabled_keys = { 'p', 'I', 'A', 'f', 'i' },
   },
 }
 
@@ -84,12 +40,7 @@ function M.setup(opts)
 
   require('demicolon.deprecation').warn_for_deprecated_options(options)
 
-  vim.list_extend(
-    options.keymaps.custom_keys,
-    options.keymaps.native_keys or {}
-  )
-
-  require('demicolon.jump').listen_for_repetable_bracket_motions(options.keymaps.custom_keys)
+  require('demicolon.jump').listen_for_repetable_bracket_motions(options.keymaps.disabled_keys)
 end
 
 return M

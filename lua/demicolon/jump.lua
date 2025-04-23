@@ -19,22 +19,11 @@ function M.repeatably_do(func, opts, additional_args)
   func(opts, unpack(additional_args))
 end
 
----@param key string
----@param repeatable_bracket_keys table<string>
+---@param previous_key string
 ---@return boolean
-local function native_repeatable_motion(previous_key, key, repeatable_bracket_keys)
-  local split_trigger = vim.tbl_contains({ ']', '[' }, previous_key)
-      and vim.tbl_contains(repeatable_bracket_keys, key)
-  return split_trigger
-end
-
---- NOTE: assumes that all repeatable commands are two characters long, for
---- example `]f`
----@param typed string
----@param repeatable_bracket_keys table<string>
----@return boolean
-local function remapped_repeatable_motion(typed, repeatable_bracket_keys)
-  return vim.tbl_contains(repeatable_bracket_keys, typed:sub(2))
+local function is_native_repeatable_motion(previous_key)
+  -- Motion is split into two and starts with `]` or `[`
+  return vim.tbl_contains({ ']', '[' }, previous_key)
 end
 
 ---@param forward boolean
@@ -68,35 +57,40 @@ end
 
 ---@param string string
 local function has_bracket_prefix(string)
+  if #string <= 1 then
+    return false
+  end
+
   local prefix = string:sub(1, 1)
-  return prefix == ']' or '['
+  return prefix == ']' or prefix == '['
 end
 
----@param repeatable_bracket_keys table<string>
-function M.listen_for_repetable_bracket_motions(repeatable_bracket_keys)
+---@param disabled_keys table<string>
+function M.listen_for_repetable_bracket_motions(disabled_keys)
   local previous_key
 
   vim.on_key(function(_, typed)
     -- `keytrans` deals with modifier cases like `]CTRL-Q` for instance
     typed = vim.fn.keytrans(typed)
 
+    local motion
+
     -- For native (non-remapped) commands, `typed` will be split into two
     -- characters. That's what `previous_key` is for. For commands that have
     -- been remapped `vim.on_key` will only get called once for the entire
     -- command, and `typed` will be the entire command.
-
-    local motion
-
-    if native_repeatable_motion(previous_key, typed, repeatable_bracket_keys) then
+    if is_native_repeatable_motion(previous_key) then
       motion = previous_key .. typed
-    elseif
-        has_bracket_prefix(typed)
-        and remapped_repeatable_motion(typed, repeatable_bracket_keys)
-    then
+    elseif has_bracket_prefix(typed) then
       motion = typed
     else
       -- Not a recognized repeatable command
       previous_key = typed
+      return
+    end
+
+    -- If the key is disabled
+    if vim.tbl_contains(disabled_keys, motion:sub(2)) then
       return
     end
 
