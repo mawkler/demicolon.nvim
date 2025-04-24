@@ -4,12 +4,12 @@ local M = {}
 
 --- Repeat the last last demicolon jump forward
 function M.forward()
-  return ts_repeatable_move.repeat_last_move_next()
+  return ts_repeatable_move.repeat_last_move({ forward = true, repeated = true })
 end
 
 --- Repeat the last last demicolon jump backward
 function M.backward()
-  return ts_repeatable_move.repeat_last_move_previous()
+  return ts_repeatable_move.repeat_last_move({ forward = false, repeated = true })
 end
 
 --- Like `forward`, but repeats based on the direction of the original jump.

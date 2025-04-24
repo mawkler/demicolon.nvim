@@ -1,9 +1,11 @@
 local M = {}
 
----@alias demicolon.jump.opts { forward: boolean }
+---@class demicolon.jump.opts
+---@field forward boolean `true` if the jump is forwards, `false` if it is backwards
+---@field repeated? boolean `true` if the jump was repeated with `;`/`,`
 
----@param func fun(opts: (table | demicolon.jump.opts), additional_args?: ...) Repeatable function to be called. It should determine by the `forward` boolean whether to move forward or backward
----@param opts table | demicolon.jump.opts Options to pass to the function. Make sure to include the `forward` boolean
+---@param func fun(opts: (demicolon.jump.opts | table), additional_args?: ...) Repeatable function to be called. It should determine by the `forward` boolean whether to move forward or backward
+---@param opts demicolon.jump.opts | table Options to pass to the function. Make sure to include the `forward` boolean
 ---@param additional_args? any[]
 function M.repeatably_do(func, opts, additional_args)
   local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
