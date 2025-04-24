@@ -101,16 +101,16 @@ Below are some examples of motions, both built-in and provided by plugins).
 | Motion            | Jumps to next/pevious...                | Help page with more information                                                                                                             |
 | ----------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `]d`/`[d`         | Next/previous diagnostic (any severity) | [`:help ]d`](https://neovim.io/doc/user/tagsrch.html#%5Dd-default)/[`:help [d`](https://neovim.io/doc/user/tagsrch.html#%5Bd-default)       |
-| `]q`/`[q`         | item in quickfix list                   | [`:help ]q`](https://neovim.io/doc/user/quickfix.html#%5Dq)/[`:help [q`](https://neovim.io/doc/user/quickfix.html#%5Bq)                     |
-| `]l`/`[l`         | item in location list                   | [`:help ]l`](https://neovim.io/doc/user/quickfix.html#%5Dl)/[`:help [l`](https://neovim.io/doc/user/quickfix.html#%5Bl)                     |
-| `]<C-q>`/`[<C-q>` | file in quickfix list                   | [`:help ]CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-Q)/[`:help [CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-Q) |
-| `]<C-l>`/`[<C-l>` | file in location list                   | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
-| `]z`/`[z`         | fold                                    | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)                                 |
-| `]s`/`[s`         | spelling mistake                        | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
+| `]q`/`[q`         | Item in quickfix list                   | [`:help ]q`](https://neovim.io/doc/user/quickfix.html#%5Dq)/[`:help [q`](https://neovim.io/doc/user/quickfix.html#%5Bq)                     |
+| `]l`/`[l`         | Item in location list                   | [`:help ]l`](https://neovim.io/doc/user/quickfix.html#%5Dl)/[`:help [l`](https://neovim.io/doc/user/quickfix.html#%5Bl)                     |
+| `]<C-q>`/`[<C-q>` | File in quickfix list                   | [`:help ]CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-Q)/[`:help [CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-Q) |
+| `]<C-l>`/`[<C-l>` | File in location list                   | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
+| `]z`/`[z`         | Fold                                    | [`:help z]`](https://neovim.io/doc/user/fold.html#%5Dz)/[`:help z[`](https://neovim.io/doc/user/fold.html#%5Bz)                                 |
+| `]s`/`[s`         | Spelling mistake                        | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
 
 For a list of more native motions see [`:help ]`](https://neovim.io/doc/user/vimindex.html#%5D)
 
-#### Treesitter text-object motions
+#### [Nvim-treesitter-textobject](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) motions
 
 Demicolon lets you repeat any [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) motion. For example: `]f` to "jump to next function", `]c` to "jump to next class", etc.
 
