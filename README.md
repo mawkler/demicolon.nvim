@@ -7,8 +7,6 @@ See [**Usage**](#usage) and [**Configuration**](#configuration) for more informa
 > [!NOTE]
 > Because of Demicolon's 2.0 reimplementation that now automagically lets you repeat **all** `]` and `[` prefixed motions, demicolon no longer creates plugin-specific (or diagnostics) keymaps. If you depended on Demicolon's default plugin keymaps, here is what's been removed:
 
-https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
-
 <details>
 <summary><b>Click to expand</b></summary>
 
@@ -70,6 +68,8 @@ map(nxo, '[T', neotest_jump('prev', 'failed'), { desc = 'Previous failed test' }
 ```
 
 </details>
+
+https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
 ## Installation
 
