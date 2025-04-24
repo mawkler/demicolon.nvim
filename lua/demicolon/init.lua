@@ -7,7 +7,7 @@ local M = {}
 
 ---@class demicolon.keymaps.options
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
----@field repeat_motions? boolean Create `;` and `,` key mappings
+---@field repeat_motions? false|'stateless'|'stateful' Create `;` and `,` key mappings
 ---@field disabled_keys? table<string> Keys that shouldn't be repeatable (because aren't motions), excluding the prefix `]`/`[`
 
 ---@class demicolon.options
@@ -16,7 +16,7 @@ local M = {}
 local options = {
   keymaps = {
     horizontal_motions = true,
-    repeat_motions = true,
+    repeat_motions = 'stateless',
     disabled_keys = { 'p', 'I', 'A', 'f', 'i' },
   },
 }
@@ -34,8 +34,9 @@ function M.setup(opts)
     keymaps.create_default_horizontal_keymaps()
   end
 
-  if options.keymaps.repeat_motions then
-    keymaps.create_default_repeat_keymaps()
+  local direction = options.keymaps.repeat_motions
+  if direction then
+    keymaps.create_default_repeat_keymaps(direction)
   end
 
   require('demicolon.deprecation').warn_for_deprecated_options(options)

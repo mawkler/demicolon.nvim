@@ -2,9 +2,17 @@ local M = {}
 
 local nxo = { 'n', 'x', 'o' }
 
-function M.create_default_repeat_keymaps()
-  vim.keymap.set(nxo, ';', require('demicolon.repeat_jump').forward)
-  vim.keymap.set(nxo, ',', require('demicolon.repeat_jump').backward)
+function M.create_default_repeat_keymaps(direction)
+  assert(type(direction) == "string" and (direction == 'stateless' or direction == 'stateful'), "repeat_motions must either be 'stateless' or 'stateful'")
+
+  local repeat_jump = require('demicolon.repeat_jump')
+  if direction == 'stateless' then
+    vim.keymap.set(nxo, ';', repeat_jump.forward)
+    vim.keymap.set(nxo, ',', repeat_jump.backward)
+  else
+    vim.keymap.set(nxo, ';', repeat_jump.next)
+    vim.keymap.set(nxo, ',', repeat_jump.prev)
+  end
 end
 
 function M.create_default_horizontal_keymaps()
