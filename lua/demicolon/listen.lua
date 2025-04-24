@@ -47,8 +47,6 @@ end
 
 ---@param disabled_keys table<string>
 function M.listen_for_repetable_bracket_motions(disabled_keys)
-  local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
-
   local previous_key
 
   vim.on_key(function(_, typed)
@@ -77,6 +75,7 @@ function M.listen_for_repetable_bracket_motions(disabled_keys)
     end
 
     if motion then
+      local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
       ts_repeatable_move.last_move = {
         func = function(opts)
           local new_motion = motion_from_direction(opts.forward, motion)
