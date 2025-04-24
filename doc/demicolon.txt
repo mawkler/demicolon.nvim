@@ -129,27 +129,27 @@ NATIVE NEOVIM MOTIONS
                   diagnostic (any 
                   severity)       
 
-  ]q/[q           item in         :help ]q/:help [q
+  ]q/[q           Item in         :help ]q/:help [q
                   quickfix list   
 
-  ]l/[l           item in         :help ]l/:help [l
+  ]l/[l           Item in         :help ]l/:help [l
                   location list   
 
-  ]<C-q>/[<C-q>   file in         :help ]CTRL-Q/:help [CTRL-Q
+  ]<C-q>/[<C-q>   File in         :help ]CTRL-Q/:help [CTRL-Q
                   quickfix list   
 
-  ]<C-l>/[<C-l>   file in         :help ]CTRL-L/:help [CTRL-L
+  ]<C-l>/[<C-l>   File in         :help ]CTRL-L/:help [CTRL-L
                   location list   
 
-  ]z/[z           fold            :help zj/:help zk
+  ]z/[z           Fold            :help z]/:help z[
 
-  ]s/[s           spelling        :help ]s/:help [s
+  ]s/[s           Spelling        :help ]s/:help [s
                   mistake         
   ----------------------------------------------------------------------------------
 For a list of more native motions see |`:help ]`|
 
 
-TREESITTER TEXT-OBJECT MOTIONS
+NVIM-TREESITTER-TEXTOBJECT MOTIONS
 
 Demicolon lets you repeat any nvim-treesitter-textobjects
 <https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move>
