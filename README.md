@@ -94,7 +94,7 @@ Of course, Demicolon also lets you repeat `t`/`T`/`f`/`F` with `;`/`,`. See [`:h
 
 ### Examples of repeatable motions
 
-Below are some examples of motions, both built-in and provided by plugins).
+Below are some examples of motions, both built-in and provided by plugins.
 
 #### Native Neovim motions
 
@@ -277,7 +277,6 @@ require('lazy').setup({
     opts = {
       keymaps = {
         horizontal_motions = false,
-        list_motions = false,
         -- `f` is removed from this table because we have mapped it to
         -- `@function.outer` with nvim-treesitter-textobjects
         disabled_keys = { 'p', 'I', 'A', 'i' },

@@ -12,15 +12,18 @@ function M.backward()
   return ts_repeatable_move.repeat_last_move_previous()
 end
 
---- Like `repeat_jump_forward`, but repeats based on the direction of the original jump.
+--- Like `forward`, but repeats based on the direction of the original jump.
 function M.next()
   return ts_repeatable_move.repeat_last_move({ repeated = true })
 end
 
+--- Like `backward`, but repeats based on the direction of the original jump.
 function M.prev()
-  return ts_repeatable_move.last_move and ts_repeatable_move.repeat_last_move(
-    { forward = not M.last_move.opts.forward, repeated = true }
-  )
+  local opts = {
+    forward = not ts_repeatable_move.last_move.opts.forward,
+    repeated = true,
+  }
+  return ts_repeatable_move.last_move and ts_repeatable_move.repeat_last_move(opts)
 end
 
 return M
