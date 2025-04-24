@@ -40,7 +40,7 @@ function M.setup(opts)
 
   require('demicolon.deprecation').warn_for_deprecated_options(options)
 
-  require('demicolon.jump').listen_for_repetable_bracket_motions(options.keymaps.disabled_keys)
+  require('demicolon.listen').listen_for_repetable_bracket_motions(options.keymaps.disabled_keys)
 end
 
 return M
