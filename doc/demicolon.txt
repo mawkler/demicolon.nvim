@@ -25,9 +25,6 @@ information.
   lets you repeat **all** `]` and `[` prefixed motions, demicolon no longer
   creates plugin-specific (or diagnostics) keymaps. If you depended on
   Demicolon’s default plugin keymaps, here is what’s been removed:
-
-https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
-
 Click to expand ~
 
 >lua
@@ -86,6 +83,9 @@ Click to expand ~
     map(nxo, ']T', neotest_jump('next', 'failed'), { desc = 'Next failed test' })
     map(nxo, '[T', neotest_jump('prev', 'failed'), { desc = 'Previous failed test' })
 <
+
+
+https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
 
 INSTALLATION                           *demicolon-demicolon.nvim-installation*
