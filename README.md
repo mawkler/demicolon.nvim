@@ -1,16 +1,75 @@
 # demicolon.nvim
 
-In addition to repeating just the `t`/`T`/`f`/`F` motions with `;` (repeat forward) and `,` (repeat backward), demicolon.nvim also lets you use them to repeat other types of motions:
-
-- [Native Neovim motions](#native-neovim-motions) (e.g. `]q/[q`)
-- [Diagnostic jumps](#diagnostic-motions) (e.g. `]d`/`[d`)
-- [nvim-treesitter-textobjects](#treesitter-text-object-motions) (e.g. `]f`/`[f`)
-- [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) (`]c`/`[c`)
-- [neotest](https://github.com/nvim-neotest/neotest) (e.g. `]t`/`[t`)
+Demicolon lets you repeat **all** `]`/`[`-prefixed motions with `;` (repeat forward). For example `]q`, `]l`, `]s` and `]]`, as well as motions defined by [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
 
 See [**Usage**](#usage) and [**Configuration**](#configuration) for more information.
 
 https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
+
+> [!NOTE]
+> Because of Demicolon's 2.0 reimplementation that now automagically lets you repeat **all** `]` and `[` prefixed motions, demicolon no longer creates plugin-specific (or diagnostics) keymaps. If you depended on Demicolon's default plugin keymaps, here is what's been removed:
+
+<details>
+<summary><b>Click to expand</b></summary>
+
+```lua
+-- Diagnostics
+local function diagnostic_jump(count, severity)
+  return function()
+    vim.diagnostic.jump({ count = count, severity = severity })
+  end
+end
+
+local map, nxo = vim.keymap.set, { 'n', 'x', 'o' }
+local severity = vim.diagnostic.severity
+local error, warn, info, hint = severity.ERROR, severity.WARN, severity.INFO, severity.HINT
+
+map(nxo, ']e', diagnostic_jump(1, error), { desc = 'Next error' })
+map(nxo, '[e', diagnostic_jump(-1, error), { desc = 'Previous error' })
+
+map(nxo, ']w', diagnostic_jump(1, warn), { desc = 'Next warning' })
+map(nxo, '[w', diagnostic_jump(-1, warn), { desc = 'Previous warning' })
+
+map(nxo, ']i', diagnostic_jump(1, info), { desc = 'Next info' })
+map(nxo, '[i', diagnostic_jump(1, info), { desc = 'Previous info' })
+
+map(nxo, ']h', diagnostic_jump(1, hint), { desc = 'Next hint' })
+map(nxo, '[h', diagnostic_jump(-1, hint), { desc = 'Previous hint' })
+
+-- Gitsigns (from its README):
+local map = vim.keymap.set
+map('n', ']c', function()
+  if vim.wo.diff then
+    vim.cmd.normal({ ']c', bang = true })
+  else
+    gitsigns.nav_hunk('next')
+  end
+end)
+
+map('n', '[c', function()
+  if vim.wo.diff then
+    vim.cmd.normal({ '[c', bang = true })
+  else
+    gitsigns.nav_hunk('prev')
+  end
+end)
+
+-- Neotest
+local map, nxo = vim.keymap.set, { 'n', 'x', 'o' }
+
+local function neotest_jump(direction, status)
+  return function()
+    require('neotest').jump[direction]({ status = status })
+  end
+end
+
+map(nxo, ']t', neotest_jump('next'), { desc = 'Next test' })
+map(nxo, '[t', neotest_jump('prev'), { desc = 'Previous test' })
+map(nxo, ']T', neotest_jump('next', 'failed'), { desc = 'Next failed test' })
+map(nxo, '[T', neotest_jump('prev', 'failed'), { desc = 'Previous failed test' })
+```
+
+</details>
 
 ## Installation
 
@@ -19,8 +78,6 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 {
   'mawkler/demicolon.nvim',
-  -- keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[', ']d', '[d' }, -- Uncomment this to lazy load
-  -- ft = 'tex',                                                    -- ...and this if you use LaTeX
   dependencies = {
     'nvim-treesitter/nvim-treesitter',
     'nvim-treesitter/nvim-treesitter-textobjects',
@@ -31,56 +88,49 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ## Usage
 
-After pressing any of the keymaps below, demicolon.nvim lets you repeat them with `;` and `,`.
+After pressing a `]`/`[`-prefixed key, for example `]q`, Demicolon lets you repeat its motion with `;` and `,`.
 
-### `t`/`T`/`f`/`F` motions
+Of course, Demicolon also lets you repeat `t`/`T`/`f`/`F` with `;`/`,`. See [`:help t`](https://neovim.io/doc/user/motion.html#t), [`:help T`](https://neovim.io/doc/user/motion.html#T), [`:help f`](https://neovim.io/doc/user/motion.html#f), and [`:help F`](https://neovim.io/doc/user/motion.html#F) respectively for more information.
 
-See [`:help t`](https://neovim.io/doc/user/motion.html#t), [`:help T`](https://neovim.io/doc/user/motion.html#T), [`:help f`](https://neovim.io/doc/user/motion.html#f), and [`:help F`](https://neovim.io/doc/user/motion.html#F) respectively.
+### Examples of repeatable motions
 
-### Diagnostic motions
+Below are some examples of motions, both built-in and provided by plugins).
 
-By default, demicolon.nvim will create the diagnostic motion keymaps below. See [Configuration](#Configuration) for info on how to disable default keymaps.
+#### Native Neovim motions
 
-| Motion    | Description                             |
-| --------- | --------------------------------------- |
-| `]d`/`[d` | Next/previous diagnostic (any severity) |
-| `]e`/`[e` | Next/previous error                     |
-| `]w`/`[w` | Next/previous warning                   |
-| `]i`/`[i` | Next/previous information               |
-| `]h`/`[h` | Next/previous hint                      |
+| Motion            | Jumps to next/pevious...                | Help page with more information                                                                                                             |
+| ----------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `]d`/`[d`         | Next/previous diagnostic (any severity) | [`:help ]d`](https://neovim.io/doc/user/tagsrch.html#%5Dd-default)/[`:help [d`](https://neovim.io/doc/user/tagsrch.html#%5Bd-default)       |
+| `]q`/`[q`         | item in quickfix list                   | [`:help ]q`](https://neovim.io/doc/user/quickfix.html#%5Dq)/[`:help [q`](https://neovim.io/doc/user/quickfix.html#%5Bq)                     |
+| `]l`/`[l`         | item in location list                   | [`:help ]l`](https://neovim.io/doc/user/quickfix.html#%5Dl)/[`:help [l`](https://neovim.io/doc/user/quickfix.html#%5Bl)                     |
+| `]<C-q>`/`[<C-q>` | file in quickfix list                   | [`:help ]CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-Q)/[`:help [CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-Q) |
+| `]<C-l>`/`[<C-l>` | file in location list                   | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
+| `]z`/`[z`         | fold                                    | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)                                 |
+| `]s`/`[s`         | spelling mistake                        | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
 
-### Treesitter text-object motions
+For a list of more native motions see [`:help ]`](https://neovim.io/doc/user/vimindex.html#%5D)
 
-demicolon.nvim lets you repeat any [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) motion. For example: `]f` to "jump to next function", `]c` to "jump to next class", etc.
+#### Treesitter text-object motions
+
+Demicolon lets you repeat any [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move) motion. For example: `]f` to "jump to next function", `]c` to "jump to next class", etc.
 
 > [!NOTE]
 > To use treesitter text-objects you need to [configure `textobjects.move` in nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
 
-### Native Neovim motions
-
-| Motion            | Jumps to next/pevious... | Help page with more information                                                                                                             |
-| ----------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| `]q`/`[q`         | item in quickfix list    | [`:help ]q`](https://neovim.io/doc/user/quickfix.html#%5Dq)/[`:help [q`](https://neovim.io/doc/user/quickfix.html#%5Bq)                     |
-| `]l`/`[l`         | item in location list    | [`:help ]l`](https://neovim.io/doc/user/quickfix.html#%5Dl)/[`:help [l`](https://neovim.io/doc/user/quickfix.html#%5Bl)                     |
-| `]<C-q>`/`[<C-q>` | file in quickfix list    | [`:help ]CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-Q)/[`:help [CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-Q) |
-| `]<C-l>`/`[<C-l>` | file in location list    | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
-| `]z`/`[z`         | fold                     | [`:help zj`](https://neovim.io/doc/user/fold.html#zj)/[`:help zk`](https://neovim.io/doc/user/fold.html#zk)                                 |
-| `]s`/`[s`         | spelling mistake         | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
-
-### [Gitsigns](https://github.com/lewis6991/gitsigns.nvim) motions
+#### [Gitsigns](https://github.com/lewis6991/gitsigns.nvim) motions
 
 | Motion    | Jumps to next/pevious... | Help page with more information |
 | --------- | ------------------------ | ------------------------------- |
 | `]c`/`[c` | Git hunk                 | `:help gitsigns.nav_hunk()`     |
 
-### [Neotest](https://github.com/nvim-neotest/neotest) motions
+#### [Neotest](https://github.com/nvim-neotest/neotest) motions
 
 | Motion    | Jumps to next/pevious... | Help page with more information |
 | --------- | ------------------------ | ------------------------------- |
 | `]t`/`[t` | Test                     | `:help neotest.jump`            |
 | `]T`/`[T` | Failed test              | `:help neotest.jump`            |
 
-### [VimTeX](https://github.com/lervag/vimtex) motions
+#### [VimTeX](https://github.com/lervag/vimtex) motions
 
 Note that these mappings are only created in normal mode and visual mode. For some reason they don't work when created for operator-pending mode.
 
@@ -103,105 +153,26 @@ Default options:
 
 ```lua
 opts = {
-  diagnostic = {
-    -- See `:help vim.diagnostic.Opts.Float`
-    float = {}
-  },
   -- Create default keymaps
   keymaps = {
     -- Create t/T/f/F key mappings
     horizontal_motions = true,
-    -- Create ]d/[d, etc. key mappings to jump to diganostics. See demicolon.keymaps.create_default_diagnostic_keymaps
-    diagnostic_motions = true,
     -- Create ; and , key mappings
     repeat_motions = true,
-    -- Create ]q/[q/]<C-q>/[<C-q> and ]l/[l/]<C-l>/[<C-l> quickfix and location list mappings
-    list_motions = true,
-    -- Create `]s`/`[s` key mappings for jumping to spelling mistakes
-    spell_motions = true,
-    -- Create `]z`/`[z` key mappings for jumping to folds
-    fold_motions = true,
-  },
-  integrations = {
-    -- Integration with https://github.com/lewis6991/gitsigns.nvim
-    gitsigns = {
-      enabled = true,
-      keymaps = {
-        next = ']c',
-        prev = '[c',
-      },
-    },
-    -- Integration with https://github.com/nvim-neotest/neotest
-    neotest = {
-      enabled = true,
-      keymaps = {
-        test = {
-          next = ']t',
-          prev = '[t',
-        },
-        failed_test = {
-          next = ']T',
-          prev = '[T',
-        },
-      },
-    },
-    -- Integration with https://github.com/lervag/vimtex
-    vimtex = {
-      enabled = true,
-      keymaps = {
-        section_start = {
-          next = ']]',
-          prev = '[[',
-        },
-        section_end = {
-          next = '][',
-          prev = '[]',
-        },
-        frame_start = {
-          next = ']r',
-          prev = '[r',
-        },
-        frame_end = {
-          next = ']R',
-          prev = '[R',
-        },
-        math_start = {
-          next = ']n',
-          prev = '[n',
-        },
-        math_end = {
-          next = ']N',
-          prev = '[N',
-        },
-        comment_start = {
-          next = ']/',
-          prev = '[/',
-        },
-        comment_end = {
-          next = ']*',
-          prev = '[*',
-        },
-        environment_start = {
-          next = ']m',
-          prev = '[m',
-        },
-        environment_end = {
-          next = ']M',
-          prev = '[M',
-        },
-      }
-    },
+    -- Keys that shouldn't be repeatable (because aren't motions), excluding the prefix `]`/`[`
+    -- If you have custom motions that use one of these, make sure to remove that key from here
+    disabled_keys = { 'p', 'I', 'A', 'f', 'i' },
   },
 }
 ```
 
 ### Custom jumps
 
-You can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [neotest integration](./lua/demicolon/integrations/neotest.lua#L4-L17) for inspiration.
+If you have custom motions that don't start with `]`/`[` that you want to make repetable ([for example for flash.nvim](https://github.com/mawkler/demicolon.nvim/issues/11)) you can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [neotest integration](./lua/demicolon/integrations/neotest.lua#L4-L17) for inspiration.
 
 ### eyeliner.nvim integration
 
-[eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim) can highlight unique letters in words when you press `t`/`T`/`f`/`F`. Below is my recommended configuration for using eyeliner.nvim together with demicolon.nvim.
+[eyeliner.nvim](https://github.com/jinh0/eyeliner.nvim) can highlight unique letters in words when you press `t`/`T`/`f`/`F`. Below is my recommended configuration for using eyeliner.nvim together with Demicolon.
 
 **NOTE:** make sure to set `keymaps.horizontal_motions = false` in your demicolon setup if you want to use this config.
 
@@ -231,7 +202,7 @@ return {
     vim.keymap.set(nxo, 'F', eyeliner_jump('F'), opts)
     vim.keymap.set(nxo, 't', eyeliner_jump('t'), opts)
     vim.keymap.set(nxo, 'T', eyeliner_jump('T'), opts)
-  end
+  end,
 }
 ```
 
@@ -274,25 +245,11 @@ require('lazy').setup({
   {
     'jinh0/eyeliner.nvim',
     keys = { 't', 'f', 'T', 'F' },
-    opts = {
-      highlight_on_key = true,
-      dim = true,
-      default_keymaps = false,
-    }
-  },
-  {
-    'mawkler/demicolon.nvim',
-    dependencies = {
-      'jinh0/eyeliner.nvim',
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-treesitter/nvim-treesitter-textobjects'
-    },
-    keys = { ';', ',', 't', 'f', 'T', 'F', ']', '[', ']d', '[d' },
     config = function()
-      require('demicolon').setup({
-        keymaps = {
-          horizontal_motions = false,
-        },
+      require('eyeliner').setup({
+        highlight_on_key = true,
+        dim = true,
+        default_keymaps = false,
       })
 
       local function eyeliner_jump(key)
@@ -303,15 +260,30 @@ require('lazy').setup({
         end
       end
 
-      local nxo = { 'n', 'x', 'o' }
-      local opts = { expr = true }
+      local map, nxo, opts = vim.keymap.set, { 'n', 'x', 'o' }, { expr = true }
 
-      vim.keymap.set(nxo, 'f', eyeliner_jump('f'), opts)
-      vim.keymap.set(nxo, 'F', eyeliner_jump('F'), opts)
-      vim.keymap.set(nxo, 't', eyeliner_jump('t'), opts)
-      vim.keymap.set(nxo, 'T', eyeliner_jump('T'), opts)
-    end
-  }
+      map(nxo, 'f', eyeliner_jump('f'), opts)
+      map(nxo, 'F', eyeliner_jump('F'), opts)
+      map(nxo, 't', eyeliner_jump('t'), opts)
+      map(nxo, 'T', eyeliner_jump('T'), opts)
+    end,
+  },
+  {
+    'mawkler/demicolon.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    opts = {
+      keymaps = {
+        horizontal_motions = false,
+        list_motions = false,
+        -- `f` is removed from this table because we have mapped it to
+        -- `@function.outer` with nvim-treesitter-textobjects
+        disabled_keys = { 'p', 'I', 'A', 'i' },
+      },
+    },
+  },
 })
 ```
 
