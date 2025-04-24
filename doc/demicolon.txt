@@ -116,7 +116,7 @@ information.
 
 EXAMPLES OF REPEATABLE MOTIONS ~
 
-Below are some examples of motions, both built-in and provided by plugins).
+Below are some examples of motions, both built-in and provided by plugins.
 
 
 NATIVE NEOVIM MOTIONS
@@ -355,7 +355,6 @@ Click here to see the code ~
         opts = {
           keymaps = {
             horizontal_motions = false,
-            list_motions = false,
             -- `f` is removed from this table because we have mapped it to
             -- `@function.outer` with nvim-treesitter-textobjects
             disabled_keys = { 'p', 'I', 'A', 'i' },
