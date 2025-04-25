@@ -2,11 +2,18 @@ local M = {}
 
 local nxo = { 'n', 'x', 'o' }
 
-function M.create_default_repeat_keymaps(direction)
-  assert(type(direction) == "string" and (direction == 'stateless' or direction == 'stateful'), "repeat_motions must either be 'stateless' or 'stateful'")
+---@param repeat_behaviour 'stateless' | 'stateful'
+function M.create_default_repeat_keymaps(repeat_behaviour)
+  local is_valid_behaviour_type = type(repeat_behaviour) == 'string'
+      and repeat_behaviour == 'stateless' or repeat_behaviour == 'stateful'
+  assert(
+    is_valid_behaviour_type,
+    "demicolon.nvim: keymaps.repeat_motions must either be 'stateless' or 'stateful'"
+  )
 
   local repeat_jump = require('demicolon.repeat_jump')
-  if direction == 'stateless' then
+
+  if repeat_behaviour == 'stateless' then
     vim.keymap.set(nxo, ';', repeat_jump.forward)
     vim.keymap.set(nxo, ',', repeat_jump.backward)
   else

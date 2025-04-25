@@ -34,9 +34,9 @@ function M.setup(opts)
     keymaps.create_default_horizontal_keymaps()
   end
 
-  local direction = options.keymaps.repeat_motions
-  if direction then
-    keymaps.create_default_repeat_keymaps(direction)
+  local repeat_behaviour = options.keymaps.repeat_motions
+  if repeat_behaviour ~= false then
+    keymaps.create_default_repeat_keymaps(repeat_behaviour)
   end
 
   require('demicolon.deprecation').warn_for_deprecated_options(options)
