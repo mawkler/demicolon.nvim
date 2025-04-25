@@ -7,7 +7,7 @@ local M = {}
 
 ---@class demicolon.keymaps.options
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
----@field repeat_motions? false|'stateless'|'stateful' Create `;` and `,` key mappings
+---@field repeat_motions? 'stateless' | 'stateful' | false Create `;` and `,` key mappings. `'stateless'` means that `;`/`,` move right/left. `'stateful'` means that `;`/`,` will remember the direction of the original jump, and `,` inverts that direction (Neovim's default behaviour).
 ---@field disabled_keys? table<string> Keys that shouldn't be repeatable (because aren't motions), excluding the prefix `]`/`[`
 
 ---@class demicolon.options
