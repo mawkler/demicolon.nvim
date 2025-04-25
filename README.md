@@ -293,30 +293,6 @@ require('lazy').setup({
 
 [Here's](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#built-in-textobjects) the full list of available treesitter textobjects.
 
-### "I want `;`/`,` to remember the direction of the original jump"
-
-Neovim's default behaviour is for `;`/`,` to remember the direction of the jump that they repeat. That means that if you for instance repeat a `T` motion (as opposed to `t`) with `;` it will move you to the _left_. A lot of people prefer if `;` always moves you to the right and `,` always to the left, which is how demicolon works by default.
-
-If you prefer Neovim's default behaviour you can disable demicolon's default `;`/`,` keymaps and remap them manually like this:
-
-<details>
-<summary><b>Click here to see the code</b></summary>
-
-```lua
-require('demicolon').setup({
-  keymaps = {
-    repeat_motions = false,
-  },
-})
-
-local nxo = { 'n', 'x', 'o' }
-
-vim.keymap.set(nxo, ';', require('demicolon.repeat_jump').next)
-vim.keymap.set(nxo, ',', require('demicolon.repeat_jump').prev)
-```
-
-</details>
-
 ## Credit
 
 [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) is used at the core of Demicolon's repeat logic. Credit to them for making an awesome plugin!
