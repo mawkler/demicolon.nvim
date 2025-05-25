@@ -8,7 +8,10 @@ local M = {}
 ---@param opts demicolon.jump.opts | table Options to pass to the function. Make sure to include the `forward` boolean
 ---@param additional_args? any[]
 function M.repeatably_do(func, opts, additional_args)
-  local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+  local ok, ts_repeatable_move = pcall(require, 'nvim-treesitter-textobjects.repeatable_move')
+  if not ok then
+    ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+  end
 
   opts = opts or {}
   additional_args = additional_args or {}
@@ -24,7 +27,10 @@ end
 ---@param key 't' | 'T' | 'f' | 'F'
 ---@return fun(): string
 function M.horizontal_jump(key)
-  local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+  local ok, ts_repeatable_move = pcall(require, 'nvim-treesitter-textobjects.repeatable_move')
+  if not ok then
+    ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+  end
 
   return function()
     return ts_repeatable_move['builtin_' .. key .. '_expr']()

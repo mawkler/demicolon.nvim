@@ -75,7 +75,10 @@ function M.listen_for_repetable_bracket_motions(disabled_keys)
     end
 
     if motion then
-      local ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+      local ok, ts_repeatable_move = pcall(require, 'nvim-treesitter-textobjects.repeatable_move')
+      if not ok then
+        ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+      end
       ts_repeatable_move.last_move = {
         func = function(opts)
           local new_motion = motion_from_direction(opts.forward, motion)
