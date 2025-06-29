@@ -92,6 +92,28 @@ After pressing a `]`/`[`-prefixed key, for example `]q`, Demicolon lets you repe
 
 Of course, Demicolon also lets you repeat `t`/`T`/`f`/`F` with `;`/`,`. See [`:help t`](https://neovim.io/doc/user/motion.html#t), [`:help T`](https://neovim.io/doc/user/motion.html#T), [`:help f`](https://neovim.io/doc/user/motion.html#f), and [`:help F`](https://neovim.io/doc/user/motion.html#F) respectively for more information.
 
+### Alternative/custom repeat keys
+
+If you’d rather use something other than `;` and `,` to repeat the last demicolon-tracked motion, you can enable **alternative-repeat** in your setup:
+
+```lua
+require('demicolon').setup({
+  keymaps = {
+    -- disable the default ; / , if you don’t want them
+    repeat_motions = false,
+    -- turn on the new mechanism
+    alternative_repeat = {
+      enabled = true,
+      forward = { key = { 'n', '<Right>' }, fallback = 'n'  },
+      backward = { key = 'N',                fallback = 'N'  },
+      -- fallback is sent if there is no demicolon-tracked motion
+    },
+  },
+})
+```
+
+After this, pressing `n` or `<Right>` will repeat forward, and `N` will repeat backward, just like `;` and `,` would—but only for motions tracked by demicolon.nvim.
+
 ### Examples of repeatable motions
 
 Below are some examples of motions, both built-in and provided by plugins.
@@ -162,6 +184,12 @@ opts = {
     -- 'stateful' means that ;/, will remember the direction of the original
     -- jump, and `,` inverts that direction (Neovim's default behaviour).
     repeat_motions = 'stateless',
+    -- Configure alternative repeat keys
+    alternative_repeat = {
+      enabled = false,   -- set true to use alternative keys
+      forward = { key = 'n',  fallback = 'n'  }, -- example
+      backward = { key = 'N',  fallback = 'N'  }, -- example
+    },
     -- Keys that shouldn't be repeatable (because aren't motions), excluding the prefix `]`/`[`
     -- If you have custom motions that use one of these, make sure to remove that key from here
     disabled_keys = { 'p', 'I', 'A', 'f', 'i' },
