@@ -46,7 +46,7 @@ local function has_bracket_prefix(string)
 end
 
 ---@param disabled_keys table<string>
-function M.listen_for_repetable_bracket_motions(disabled_keys)
+function M.listen_for_repeatable_bracket_motions(disabled_keys)
   local previous_key
 
   vim.on_key(function(_, typed)
