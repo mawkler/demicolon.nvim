@@ -1,5 +1,10 @@
 name: Demicolon CI
-on: [push]
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/refjump.yml
+      - README.md
 jobs:
   docs:
     if: github.ref == 'refs/heads/main'
