@@ -169,6 +169,31 @@ opts = {
 }
 ```
 
+### Use different repeat keys
+
+If you’d rather not use `;` and `,` disable Demicolon’s default repeat mappings and bind your own:
+
+```lua
+require('demicolon').setup({
+  keymaps = {
+    repeat_motions = false, -- don't create ; and ,
+  },
+})
+
+local map, nxo = vim.keymap.set, { 'n', 'x', 'o' }
+
+-- Stateless: always forward/backward
+map(nxo, 'n', require('demicolon.repeat_jump').forward)
+map(nxo, 'N', require('demicolon.repeat_jump').backward)
+
+-- Or, stateful (remember the original motion’s direction)
+-- map(nxo, 'n', require('demicolon.repeat_jump').next)
+-- map(nxo, 'N', require('demicolon.repeat_jump').prev)
+
+```
+
+**NOTE:** You can bind any keys (e.g. arrows or <leader> combos) the same way.
+
 ### Custom jumps
 
 If you have custom motions that don't start with `]`/`[` that you want to make repetable ([for example for flash.nvim](https://github.com/mawkler/demicolon.nvim/issues/11)) you can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [neotest integration](./lua/demicolon/integrations/neotest.lua#L4-L17) for inspiration.
