@@ -1,4 +1,4 @@
-*demicolon.txt*           For NVIM v0.8.0          Last change: 2025 August 11
+*demicolon.txt*         For NVIM v0.8.0         Last change: 2025 September 09
 
 ==============================================================================
 Table of Contents                                *demicolon-table-of-contents*
@@ -229,6 +229,33 @@ Default options:
         disabled_keys = { 'p', 'I', 'A', 'f', 'i' },
       },
     }
+<
+
+
+USE OTHER REPEAT KEYS THAN ;/, ~
+
+If you’d rather use keymaps other than `;` and `,`, for example `n` and `N`,
+you can disable Demicolon’s default repeat mappings and create your own.
+Here’s an example:
+
+Click here to see the code ~
+
+>lua
+    require('demicolon').setup({
+      keymaps = {
+        repeat_motions = false, -- Don't create ; and , keymaps
+      },
+    })
+    
+    local map, nxo = vim.keymap.set, { 'n', 'x', 'o' }
+    
+    -- Stateless: always forward/backward
+    map(nxo, 'n', require('demicolon.repeat_jump').forward)
+    map(nxo, 'N', require('demicolon.repeat_jump').backward)
+    
+    -- Or, stateful (remember the original motion’s direction)
+    -- map(nxo, 'n', require('demicolon.repeat_jump').next)
+    -- map(nxo, 'N', require('demicolon.repeat_jump').prev)
 <
 
 
