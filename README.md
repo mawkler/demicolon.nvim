@@ -169,14 +169,17 @@ opts = {
 }
 ```
 
-### Use different repeat keys
+### Use other repeat keys than `;`/`,`
 
-If you’d rather not use `;` and `,` disable Demicolon’s default repeat mappings and bind your own:
+If you’d rather use keymaps other than `;` and `,`, for example `n` and `N`, you can disable Demicolon’s default repeat mappings and create your own. Here's an example:
+
+<details>
+<summary><b>Click here to see the code</b></summary>
 
 ```lua
 require('demicolon').setup({
   keymaps = {
-    repeat_motions = false, -- don't create ; and ,
+    repeat_motions = false, -- Don't create ; and , keymaps
   },
 })
 
@@ -189,10 +192,9 @@ map(nxo, 'N', require('demicolon.repeat_jump').backward)
 -- Or, stateful (remember the original motion’s direction)
 -- map(nxo, 'n', require('demicolon.repeat_jump').next)
 -- map(nxo, 'N', require('demicolon.repeat_jump').prev)
-
 ```
 
-**NOTE:** You can bind any keys (e.g. arrows or <leader> combos) the same way.
+</details>
 
 ### Custom jumps
 
