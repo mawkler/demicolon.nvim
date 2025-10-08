@@ -22,11 +22,11 @@ end
 
 --- Like `backward`, but repeats based on the direction of the original jump.
 function M.prev()
-  local opts = {
-    forward = not ts_repeatable_move.last_move.opts.forward,
-    repeated = true,
-  }
-  return ts_repeatable_move.last_move and ts_repeatable_move.repeat_last_move(opts)
+  local opts = { repeated = true }
+  if ts_repeatable_move.last_move then
+    opts.forward = not ts_repeatable_move.last_move.opts.forward
+  end
+  return ts_repeatable_move.repeat_last_move(opts)
 end
 
 return M
