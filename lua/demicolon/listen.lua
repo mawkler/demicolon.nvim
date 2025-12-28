@@ -4,7 +4,7 @@ local M = {}
 ---@return boolean
 local function is_native_repeatable_motion(previous_key)
   -- Motion is split into two and starts with `]` or `[`
-  return vim.tbl_contains({ ']', '[' }, previous_key)
+  return previous_key == ']' or previous_key == '['
 end
 
 ---@param forward boolean
