@@ -1,73 +1,6 @@
 # demicolon.nvim
 
-Demicolon lets you repeat **all** `]`/`[`-prefixed motions with `;` (repeat forward). For example `]q`, `]l`, `]s` and `]]`, as well as motions defined by [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects?tab=readme-ov-file#text-objects-move).
-
-See [**Usage**](#usage) and [**Configuration**](#configuration) for more information.
-
-> [!NOTE]
-> Because of Demicolon's 2.0 reimplementation that now automagically lets you repeat **all** `]` and `[` prefixed motions, demicolon no longer creates plugin-specific (or diagnostics) keymaps. If you depended on Demicolon's default plugin keymaps, here is what's been removed:
-
-<details>
-<summary><b>Click to expand</b></summary>
-
-```lua
--- Diagnostics
-local function diagnostic_jump(count, severity)
-  return function()
-    vim.diagnostic.jump({ count = count, severity = severity })
-  end
-end
-
-local map, nxo = vim.keymap.set, { 'n', 'x', 'o' }
-local severity = vim.diagnostic.severity
-local error, warn, info, hint = severity.ERROR, severity.WARN, severity.INFO, severity.HINT
-
-map(nxo, ']e', diagnostic_jump(1, error), { desc = 'Next error' })
-map(nxo, '[e', diagnostic_jump(-1, error), { desc = 'Previous error' })
-
-map(nxo, ']w', diagnostic_jump(1, warn), { desc = 'Next warning' })
-map(nxo, '[w', diagnostic_jump(-1, warn), { desc = 'Previous warning' })
-
-map(nxo, ']i', diagnostic_jump(1, info), { desc = 'Next info' })
-map(nxo, '[i', diagnostic_jump(1, info), { desc = 'Previous info' })
-
-map(nxo, ']h', diagnostic_jump(1, hint), { desc = 'Next hint' })
-map(nxo, '[h', diagnostic_jump(-1, hint), { desc = 'Previous hint' })
-
--- Gitsigns (from its README):
-local map = vim.keymap.set
-map('n', ']c', function()
-  if vim.wo.diff then
-    vim.cmd.normal({ ']c', bang = true })
-  else
-    gitsigns.nav_hunk('next')
-  end
-end)
-
-map('n', '[c', function()
-  if vim.wo.diff then
-    vim.cmd.normal({ '[c', bang = true })
-  else
-    gitsigns.nav_hunk('prev')
-  end
-end)
-
--- Neotest
-local map, nxo = vim.keymap.set, { 'n', 'x', 'o' }
-
-local function neotest_jump(direction, status)
-  return function()
-    require('neotest').jump[direction]({ status = status })
-  end
-end
-
-map(nxo, ']t', neotest_jump('next'), { desc = 'Next test' })
-map(nxo, '[t', neotest_jump('prev'), { desc = 'Previous test' })
-map(nxo, ']T', neotest_jump('next', 'failed'), { desc = 'Next failed test' })
-map(nxo, '[T', neotest_jump('prev', 'failed'), { desc = 'Previous failed test' })
-```
-
-</details>
+Demicolon lets you repeat more motions than just `f`/`F`/`t`/`T` with `;` (forward) and `,` (backward): It repeats all `]`/`[`-prefixed motions. One such motion is `]d`/`[d` (next/previous diagnostic). [Here are some more examples](#examples-of-repeatable-motions). You can also make non-`[`/`]`-prefixed motion repeatable. See [Custom Jumps section](#custom-jumps).
 
 https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
@@ -105,7 +38,7 @@ Below are some examples of motions, both built-in and provided by plugins.
 | `]l`/`[l`         | Item in location list                   | [`:help ]l`](https://neovim.io/doc/user/quickfix.html#%5Dl)/[`:help [l`](https://neovim.io/doc/user/quickfix.html#%5Bl)                     |
 | `]<C-q>`/`[<C-q>` | File in quickfix list                   | [`:help ]CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-Q)/[`:help [CTRL-Q`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-Q) |
 | `]<C-l>`/`[<C-l>` | File in location list                   | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
-| `]z`/`[z`         | Fold                                    | [`:help z]`](https://neovim.io/doc/user/fold.html#%5Dz)/[`:help z[`](https://neovim.io/doc/user/fold.html#%5Bz)                                 |
+| `]z`/`[z`         | Fold                                    | [`:help z]`](https://neovim.io/doc/user/fold.html#%5Dz)/[`:help z[`](https://neovim.io/doc/user/fold.html#%5Bz)                             |
 | `]s`/`[s`         | Spelling mistake                        | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
 
 For a list of more native motions see [`:help ]`](https://neovim.io/doc/user/vimindex.html#%5D)
@@ -162,7 +95,7 @@ opts = {
     -- 'stateful' means that ;/, will remember the direction of the original
     -- jump, and `,` inverts that direction (Neovim's default behaviour).
     repeat_motions = 'stateless',
-    -- Keys that shouldn't be repeatable (because aren't motions), excluding the prefix `]`/`[`
+    -- Keys that shouldn't be repeatable (because they aren't motions), excluding the prefix `]`/`[`
     -- If you have custom motions that use one of these, make sure to remove that key from here
     disabled_keys = { 'p', 'I', 'A', 'f', 'i' },
   },
@@ -198,7 +131,7 @@ map(nxo, 'N', require('demicolon.repeat_jump').backward)
 
 ### Custom jumps
 
-If you have custom motions that don't start with `]`/`[` that you want to make repetable ([for example for flash.nvim](https://github.com/mawkler/demicolon.nvim/issues/11)) you can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward. Take a look at how I've implemented the [neotest integration](./lua/demicolon/integrations/neotest.lua#L4-L17) for inspiration.
+If you have custom motions that don't start with `]`/`[` that you want to make repetable ([for example for flash.nvim](https://github.com/mawkler/demicolon.nvim/issues/11)) you can create your own custom repeatable jumps using `repeatably_do()` in [`demicolon.jump`](./lua/demicolon/jump.lua). `repeatably_do()` takes a funcion as its first argument and options to be passed to that function as its second argument. Make sure that the options include a boolean `forward` field to determine whether the action should be forward or backward.
 
 ### eyeliner.nvim integration
 
