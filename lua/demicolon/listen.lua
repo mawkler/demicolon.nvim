@@ -59,13 +59,16 @@ function M.listen_for_repeatable_bracket_motions(disabled_keys)
     -- characters. That's what `previous_key` is for. For commands that have
     -- been remapped `vim.on_key` will only get called once for the entire
     -- command, and `typed` will be the entire command.
-    if is_native_repeatable_motion(previous_key) then
+    if is_native_repeatable_motion(previous_key) and vim.fn.mode() == 'no' then
       motion = previous_key .. typed
     elseif has_bracket_prefix(typed) then
       motion = typed
+    elseif typed == '[' or typed == ']' then
+      previous_key = typed
+      return
     else
       -- Not a recognized repeatable command
-      previous_key = typed
+      previous_key = nil
       return
     end
 
