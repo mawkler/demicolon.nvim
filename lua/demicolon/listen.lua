@@ -88,7 +88,9 @@ function M.listen_for_repeatable_bracket_motions(disabled_keys)
           local keys = vim.api.nvim_replace_termcodes(new_motion, true, false, true)
           vim.api.nvim_feedkeys(keys, 'x', true)
         end,
-        opts = {},
+        opts = {
+          forward = motion:sub(1, 1) == ']',
+        },
         additional_args = {},
       }
     end
