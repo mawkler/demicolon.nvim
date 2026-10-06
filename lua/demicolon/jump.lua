@@ -37,4 +37,24 @@ function M.horizontal_jump(key)
   end
 end
 
+---@param opts demicolon.jump.opts
+local function change_list_jump(opts)
+  local key = opts.forward and 'g;' or 'g,'
+  local ok, err = pcall(vim.cmd.normal, { vim.v.count1 .. key, bang = true })
+  if not ok then
+    -- Strip the `Vim:` prefix to show the error like Neovim natively does
+    local message = tostring(err):gsub('^Vim[^:]*:', '')
+    vim.api.nvim_echo({ { message, 'ErrorMsg' } }, true, {})
+  end
+end
+
+--- Jump to an older (`g;`) or newer (`g,`) position in the change list
+---@param key 'g;' | 'g,'
+---@return fun()
+function M.change_list_jump(key)
+  return function()
+    M.repeatably_do(change_list_jump, { forward = key == 'g;' })
+  end
+end
+
 return M

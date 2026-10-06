@@ -7,6 +7,7 @@ local M = {}
 
 ---@class demicolon.keymaps.options
 ---@field horizontal_motions? boolean Create `t`/`T`/`f`/`F` key mappings
+---@field change_list_jumps? boolean Create `g;`/`g,` key mappings
 ---@field repeat_motions? 'stateless' | 'stateful' | false Create `;` and `,` key mappings. `'stateless'` means that `;`/`,` move right/left. `'stateful'` means that `;`/`,` will remember the direction of the original jump, and `,` inverts that direction (Neovim's default behaviour).
 ---@field disabled_keys? table<string> Keys that shouldn't be repeatable (because aren't motions), excluding the prefix `]`/`[`
 
@@ -16,6 +17,7 @@ local M = {}
 local options = {
   keymaps = {
     horizontal_motions = true,
+    change_list_jumps = true,
     repeat_motions = 'stateless',
     disabled_keys = { 'p', 'I', 'A', 'f', 'i' },
   },
@@ -32,6 +34,10 @@ function M.setup(opts)
 
   if options.keymaps.horizontal_motions then
     keymaps.create_default_horizontal_keymaps()
+  end
+
+  if options.keymaps.change_list_jumps then
+    keymaps.create_default_change_list_keymaps()
   end
 
   local repeat_behaviour = options.keymaps.repeat_motions

@@ -40,6 +40,7 @@ Below are some examples of motions, both built-in and provided by plugins.
 | `]<C-l>`/`[<C-l>` | File in location list                   | [`:help ]CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5DCTRL-L)/[`:help [CTRL-L`](https://neovim.io/doc/user/quickfix.html#%5BCTRL-L) |
 | `]z`/`[z`         | Fold                                    | [`:help z]`](https://neovim.io/doc/user/fold.html#%5Dz)/[`:help z[`](https://neovim.io/doc/user/fold.html#%5Bz)                             |
 | `]s`/`[s`         | Spelling mistake                        | [`:help ]s`](https://neovim.io/doc/user/spell.html#%5Ds)/[`:help [s`](https://neovim.io/doc/user/spell.html#%5Bs)                           |
+| `g,`/`g;`         | Position in change list                 | [`:help g;`](https://neovim.io/doc/user/motion.html#g%3B)/[`:help g,`](https://neovim.io/doc/user/motion.html#g%2C)                         |
 
 For a list of more native motions see [`:help ]`](https://neovim.io/doc/user/vimindex.html#%5D)
 
@@ -90,6 +91,8 @@ opts = {
   keymaps = {
     -- Create t/T/f/F key mappings
     horizontal_motions = true,
+    -- Create g;/g, key mappings
+    change_list_jumps = true,
     -- Create ; and , key mappings. Set it to 'stateless', 'stateful', or false to
     -- not create any mappings. 'stateless' means that ;/, move right/left.
     -- 'stateful' means that ;/, will remember the direction of the original

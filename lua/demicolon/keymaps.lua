@@ -33,4 +33,12 @@ function M.create_default_horizontal_keymaps()
   vim.keymap.set(nxo, 'T', jump.horizontal_jump('T'), expr)
 end
 
+function M.create_default_change_list_keymaps()
+  local jump = require('demicolon.jump')
+
+  -- `g;`/`g,` are not motions, and natively only work in normal mode
+  vim.keymap.set('n', 'g;', jump.change_list_jump('g;'))
+  vim.keymap.set('n', 'g,', jump.change_list_jump('g,'))
+end
+
 return M
