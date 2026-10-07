@@ -1,6 +1,8 @@
 # demicolon.nvim
 
-Demicolon lets you repeat more motions than just `f`/`F`/`t`/`T` with `;` (forward) and `,` (backward): It repeats all `]`/`[`-prefixed motions. One such motion is `]d`/`[d` (next/previous diagnostic). [Here are some more examples](#examples-of-repeatable-motions). You can also make non-`[`/`]`-prefixed motion repeatable. See [Custom Jumps section](#custom-jumps).
+Demicolon lets you repeat more motions than just `f`/`F`/`t`/`T` with `;` (forward) and `,` (backward): It repeats all `]`/`[`-prefixed motions. One such motion is `]d`/`[d` (next/previous diagnostic). [Here are some more examples](#examples-of-repeatable-motions).
+
+You can also make non-`[`/`]`-prefixed motion repeatable. See [Custom Jumps section](#custom-jumps).
 
 https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 

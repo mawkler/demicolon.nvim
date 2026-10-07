@@ -1,14 +1,16 @@
 ---@param T table Test helpers from `tests/init.lua`
 return function(T)
+  local normal_cmd = require('demicolon.util').normal_cmd
+
   -- Creates changes on lines 2, 4, 6, and 8
   local function make_changes()
     T.set_buf(vim.fn['repeat']({ 'x' }, 10))
     for _, lnum in ipairs({ 2, 4, 6, 8 }) do
-      vim.cmd('normal! ' .. lnum .. 'GAy')
+      normal_cmd(lnum .. 'GAy')
       -- Break the undo sequence so that each change gets its own entry
       vim.o.undolevels = vim.o.undolevels
     end
-    vim.cmd('normal! 10G')
+    normal_cmd('10G')
   end
 
   local function lines_after(keys)

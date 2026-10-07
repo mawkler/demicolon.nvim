@@ -1,6 +1,8 @@
 -- Adapted from nvim-treesitter-textobjects' `repeatable_move.lua`
 -- (https://github.com/nvim-treesitter/nvim-treesitter-textobjects, Apache-2.0)
 
+local normal_cmd = require('demicolon.util').normal_cmd
+
 local M = {}
 
 ---@alias demicolon.repeatability.func fun(opts: demicolon.jump.opts | table, ...: any)
@@ -50,7 +52,7 @@ local function repeat_horizontal(opts, original_forward)
 
   -- An exclusive cursor movement already matches native `;`/`,` here
   if mode:sub(1, 2) ~= 'no' or not opts.forward then
-    vim.cmd('normal! ' .. motion)
+    normal_cmd(motion)
     return
   end
 
@@ -59,12 +61,12 @@ local function repeat_horizontal(opts, original_forward)
   if forced == '' then
     -- Make the motion inclusive by selecting it with Visual mode, but not if
     -- the cursor didn't move, since that would select the character under it
-    vim.cmd('normal! v' .. motion)
+    normal_cmd('v' .. motion)
     if vim.deep_equal(vim.api.nvim_win_get_cursor(0), cursor_before) then
-      vim.cmd('normal! v')
+      normal_cmd('v')
     end
   else
-    vim.cmd('normal! ' .. motion)
+    normal_cmd(motion)
 
     -- Natively, `v` toggles `;` from inclusive to exclusive. Here it toggles
     -- the exclusive cursor movement to inclusive instead, so exclude the

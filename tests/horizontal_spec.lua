@@ -1,5 +1,7 @@
 ---@param T table Test helpers from `tests/init.lua`
 return function(T)
+  local normal_cmd = require('demicolon.util').normal_cmd
+
   local line = 'x a x b x c x d x'
 
   --- Run the keys in `case` both natively and with Demicolon's mappings, and
@@ -21,7 +23,7 @@ return function(T)
       }
     end
 
-    local expected = run(function(key) vim.cmd('normal! ' .. vim.keycode(key)) end)
+    local expected = run(function(key) normal_cmd(vim.keycode(key)) end)
     local actual = run(T.feed)
     vim.o.selection = 'inclusive'
 

@@ -1,3 +1,4 @@
+local normal_cmd = require('demicolon.util').normal_cmd
 local repeatability = require('demicolon.repeatability')
 
 local M = {}
@@ -26,10 +27,11 @@ end
 ---@param opts demicolon.jump.opts
 local function change_list_jump(opts)
   local key = opts.forward and 'g;' or 'g,'
-  local ok, err = pcall(vim.cmd.normal, { vim.v.count1 .. key, bang = true })
+  local ok, err = pcall(normal_cmd, vim.v.count1 .. key)
   if not ok then
-    -- Strip the `Vim:` prefix to show the error like Neovim natively does
-    local message = tostring(err):gsub('^Vim[^:]*:', '')
+    -- Only show the error itself, like Neovim does natively, without the
+    -- `Vim(normal):` prefix and Lua context
+    local message = tostring(err):match('E%d+:.*') or tostring(err)
     vim.api.nvim_echo({ { message, 'ErrorMsg' } }, true, {})
   end
 end

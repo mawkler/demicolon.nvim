@@ -45,6 +45,24 @@ local function has_bracket_prefix(string)
   return prefix == ']' or prefix == '['
 end
 
+--- Run `motion` like it was typed
+---@param motion string
+local function run_motion(motion)
+  -- Call a Lua mapping directly instead of feeding its keys, like Neovim does
+  -- when the keys are typed. That way the mapping gets the count given to
+  -- `;`/`,`, and works as the motion of a pending operator, like in `d;`
+  local mode = vim.api.nvim_get_mode().mode
+  local map_mode = mode:sub(1, 2) == 'no' and 'o' or mode:match('^[vV\22]') and 'x' or 'n'
+  local mapping = vim.fn.maparg(motion, map_mode, false, true)
+  if mapping.callback and mapping.expr == 0 then
+    mapping.callback()
+    return
+  end
+
+  local keys = vim.api.nvim_replace_termcodes(motion, true, false, true)
+  vim.api.nvim_feedkeys(keys, 'x', true)
+end
+
 ---@param disabled_keys table<string>
 function M.listen_for_repeatable_bracket_motions(disabled_keys)
   local previous_key
@@ -78,16 +96,11 @@ function M.listen_for_repeatable_bracket_motions(disabled_keys)
     end
 
     if motion then
-      local function perform_motion(opts)
-        local new_motion = motion_from_direction(opts.forward, motion)
-        local keys = vim.api.nvim_replace_termcodes(new_motion, true, false, true)
-        vim.api.nvim_feedkeys(keys, 'x', true)
-      end
+      local opts = { forward = motion:sub(1, 1) == ']' }
 
-      local opts = {
-        forward = motion:sub(1, 1) == ']',
-      }
-      require('demicolon.repeatability').set_last_move(perform_motion, opts)
+      require('demicolon.repeatability').set_last_move(function(o)
+        run_motion(motion_from_direction(o.forward, motion))
+      end, opts)
     end
 
     previous_key = nil -- Reset previous key on recognized command
