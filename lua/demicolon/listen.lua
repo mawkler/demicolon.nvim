@@ -78,21 +78,16 @@ function M.listen_for_repeatable_bracket_motions(disabled_keys)
     end
 
     if motion then
-      local ok, ts_repeatable_move = pcall(require, 'nvim-treesitter-textobjects.repeatable_move')
-      if not ok then
-        ts_repeatable_move = require('nvim-treesitter.textobjects.repeatable_move')
+      local function perform_motion(opts)
+        local new_motion = motion_from_direction(opts.forward, motion)
+        local keys = vim.api.nvim_replace_termcodes(new_motion, true, false, true)
+        vim.api.nvim_feedkeys(keys, 'x', true)
       end
-      ts_repeatable_move.last_move = {
-        func = function(opts)
-          local new_motion = motion_from_direction(opts.forward, motion)
-          local keys = vim.api.nvim_replace_termcodes(new_motion, true, false, true)
-          vim.api.nvim_feedkeys(keys, 'x', true)
-        end,
-        opts = {
-          forward = motion:sub(1, 1) == ']',
-        },
-        additional_args = {},
+
+      local opts = {
+        forward = motion:sub(1, 1) == ']',
       }
+      require('demicolon.repeatability').set_last_move(perform_motion, opts)
     end
 
     previous_key = nil -- Reset previous key on recognized command

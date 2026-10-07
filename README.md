@@ -11,10 +11,6 @@ With [lazy.nvim](https://github.com/folke/lazy.nvim):
 ```lua
 {
   'mawkler/demicolon.nvim',
-  dependencies = {
-    'nvim-treesitter/nvim-treesitter',
-    'nvim-treesitter/nvim-treesitter-textobjects',
-  },
   opts = {}
 }
 ```
@@ -236,10 +232,6 @@ require('lazy').setup({
   },
   {
     'mawkler/demicolon.nvim',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-treesitter/nvim-treesitter-textobjects',
-    },
     opts = {
       keymaps = {
         horizontal_motions = false,
@@ -258,4 +250,4 @@ require('lazy').setup({
 
 ## Credit
 
-[nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects) is used at the core of Demicolon's repeat logic. Credit to them for making an awesome plugin!
+Demicolon's repeat logic, including the `t`/`T`/`f`/`F` handling, is adapted from [nvim-treesitter-textobjects](https://github.com/nvim-treesitter/nvim-treesitter-textobjects). Credit to them for making an awesome plugin!
