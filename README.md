@@ -8,6 +8,9 @@ https://github.com/user-attachments/assets/e847cf39-40bd-49cb-9989-34e921b3393a
 
 ## Installation
 
+> [!NOTE]
+> Demicolon no longer depends on nvim-treesitter or nvim-treesitter-textobjects, so you can remove them from its dependencies.
+
 With [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
