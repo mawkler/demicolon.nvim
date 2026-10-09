@@ -1,6 +1,6 @@
 ---@param T table Test helpers from `tests/init.lua`
 return function(T)
-  local normal_cmd = require('demicolon.util').normal_cmd
+  local normal_cmd = require('demicolon.utils').normal_cmd
 
   -- Creates changes on lines 2, 4, 6, and 8
   local function make_changes()

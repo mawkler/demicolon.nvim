@@ -1,6 +1,6 @@
 ---@param T table Test helpers from `tests/init.lua`
 return function(T)
-  local normal_cmd = require('demicolon.util').normal_cmd
+  local normal_cmd = require('demicolon.utils').normal_cmd
 
   local line = 'x a x b x c x d x'
 

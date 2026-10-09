@@ -1,4 +1,4 @@
-local normal_cmd = require('demicolon.util').normal_cmd
+local normal_cmd = require('demicolon.utils').normal_cmd
 local repeatability = require('demicolon.repeatability')
 
 local M = {}

@@ -1,7 +1,7 @@
 -- Adapted from nvim-treesitter-textobjects' `repeatable_move.lua`
 -- (https://github.com/nvim-treesitter/nvim-treesitter-textobjects, Apache-2.0)
 
-local normal_cmd = require('demicolon.util').normal_cmd
+local normal_cmd = require('demicolon.utils').normal_cmd
 
 local M = {}
 
